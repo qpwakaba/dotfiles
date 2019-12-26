@@ -1,0 +1,34 @@
+autoload -U select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " _-./;@"
+zstyle ':zle:*' word-style unspecified
+
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[H" beginning-of-line
+bindkey "^[[4~" end-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[3~" delete-char
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+
+setopt PROMPT_SUBST
+
+# 時刻更新
+TRAPALRM () { zle reset-prompt }
+TMOUT=1
+
+# プロンプトの表示直前に毎回実行される
+precmd() {
+  EXIT_STATUS=$?
+
+  if [ $EXIT_STATUS -ne 130 ]; then
+    if [ $EXIT_STATUS -eq 0 ]; then
+      PROMPT="%{${fg[green]}%}[%D{%T}]%F{white} #%f %{${reset_color}%}"
+    else
+      PROMPT="%{${fg[green]}%}[%D{%T}]%F{red} #%f %{${reset_color}%}"
+    fi
+  fi
+
+  print -P "%{${fg[magenta]}%}[%n@%m]%{${reset_color}%} %~"
+}
+

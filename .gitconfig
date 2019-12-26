@@ -1,0 +1,7 @@
+[user]
+	name = King (qpwakaba)
+	email = King.qpwakaba@gmail.com
+[merge]
+	tool = vimdiff
+[core]
+	editor = vim -c \"set fenc=utf-8\"

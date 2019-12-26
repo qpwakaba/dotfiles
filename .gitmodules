@@ -1,0 +1,6 @@
+[submodule "submodules/trash"]
+	path = submodules/trash
+	url = https://github.com/rcmdnk/trash.git
+[submodule "submodules/sentaku"]
+	path = submodules/sentaku
+	url = https://github.com/rcmdnk/sentaku.git

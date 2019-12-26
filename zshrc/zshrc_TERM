@@ -1,0 +1,10 @@
+autoload -U colors && colors
+export LC_ALL=ja_JP.UTF-8
+export LSCOLORS=gafacadabaeaeaaxaxaxax
+
+
+setopt IGNORE_EOF
+
+stty start undef
+stty stop undef
+
