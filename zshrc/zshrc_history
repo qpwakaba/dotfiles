@@ -10,17 +10,3 @@ setopt HIST_EXPAND
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 
-
-function my-history-beginning-search-forward() {
-  zle history-beginning-search-backward
-  zle end-of-line
-}
-function my-history-beginning-search-backward() {
-  zle history-beginning-search-backward
-  zle end-of-line
-}
-zle -N my-history-beginning-search-backward
-zle -N my-history-beginning-search-forward
-bindkey '^P' my-history-beginning-search-backward
-bindkey '^N' my-history-beginning-search-forward
-
