@@ -122,3 +122,10 @@ if has('persistent_undo')
 endif
 
 
+" Hack #84: バッファの表示設定を保存する https://vim-jp.org/vim-users-jp/2009/10/08/Hack-84.html
+" Save fold settings.
+autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
+autocmd BufRead * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
+" Don't save options.
+set viewoptions-=options
+
