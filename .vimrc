@@ -43,6 +43,8 @@ noremap <C-j> <C-f>
 noremap <C-k> <C-b>
 noremap <C-w><C-c> <Nop>
 noremap <C-w>c <Nop>
+noremap 0 ^
+noremap ^ 0
 if has('terminal')
   tnoremap <C-w>gt <C-w>:tabn<CR>
   tnoremap <C-w>gT <C-w>:tabN<CR>
