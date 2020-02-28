@@ -115,3 +115,10 @@ if filereadable(expand($HOME.'/.local/vimrc'))
   source $HOME/.local/vimrc
 endif
 
+" Vimでファイルを開き直してもUndoができるように正しく設定する https://qiita.com/tamanobi/items/8f013cce36881af8cee3
+if has('persistent_undo')
+  set undodir=~/.vim/undo
+  set undofile
+endif
+
+
