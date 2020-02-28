@@ -51,7 +51,7 @@ if has('terminal')
 endif
 nnoremap <C-w>gt :tabn<CR>
 nnoremap <C-w>gT :tabN<CR>
-noremap <Silent> <C-w><C-l> :redraw!<CR>
+noremap <silent> <C-w><C-l> :redraw!<CR>
 noremap <M-w> :w<CR>
 noremap <Esc>w :w<CR>
 cnoremap <C-p> <Up>
