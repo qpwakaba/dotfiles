@@ -68,7 +68,9 @@ set noequalalways
 
 set wildmenu
 set completeopt=menuone,longest
-set infercase
+set noinfercase
+set wildignorecase
+set fileignorecase
 set showcmd
 
 set hidden
