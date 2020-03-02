@@ -76,6 +76,18 @@ set showcmd
 set hidden
 set rulerformat=%-20(%k\ [%l/%L],%c\ \ %{&fileencoding}%)
 
+hi VertSplit cterm=none ctermbg=none ctermfg=lightblue
+hi Search term=reverse ctermfg=black ctermbg=11
+hi StatusLine ctermbg=darkgreen ctermfg=16 cterm=none
+hi StatusLineTerm ctermbg=darkgreen ctermfg=16
+hi StatusLineNC ctermfg=7 ctermfg=white cterm=inverse
+hi StatusLineTermNC ctermbg=7 ctermfg=black
+hi TabLine cterm=none ctermbg=black ctermfg=gray
+hi TabLineSel cterm=none ctermbg=4 ctermfg=white
+hi TabLineFill cterm=none ctermbg=black ctermfg=white
+set showtabline=1
+set laststatus=2
+
 " 行末スペースハイライト
 augroup HighlightTrailingSpaces
   autocmd!
