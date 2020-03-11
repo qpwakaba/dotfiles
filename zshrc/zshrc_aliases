@@ -3,3 +3,6 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias :q='exit'
 
+function gs {
+  grep -rn "$1" .
+}
