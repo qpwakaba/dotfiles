@@ -25,6 +25,7 @@ set ignorecase
 set smartcase
 set foldlevel=999999
 set incsearch
+set formatoptions-=ro
 
 "noremap ; :
 nnoremap q <NOP>
