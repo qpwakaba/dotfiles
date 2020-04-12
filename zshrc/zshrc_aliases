@@ -6,3 +6,8 @@ alias :q='exit'
 function gs {
   grep -rn "$1" .
 }
+
+function mkcd {
+  mkdir -p "$1"
+  cd "$1"
+}
