@@ -7,7 +7,7 @@ function gs {
   grep -rn "$1" .
 }
 
-function mkcd {
+function mkd {
   mkdir -p "$1"
   cd "$1"
 }
