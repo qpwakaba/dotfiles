@@ -86,6 +86,7 @@ hi StatusLineTermNC ctermbg=7 ctermfg=black
 hi TabLine cterm=none ctermbg=black ctermfg=gray
 hi TabLineSel cterm=none ctermbg=4 ctermfg=white
 hi TabLineFill cterm=none ctermbg=black ctermfg=white
+hi MatchParen term=NONE ctermfg=red ctermbg=NONE
 set showtabline=1
 set laststatus=2
 
