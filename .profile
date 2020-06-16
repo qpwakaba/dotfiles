@@ -5,4 +5,9 @@ if [ -f "$HOME/.local/profile" ]; then
   export PATH="$DOTFILES_HOME/bin:$PATH"
 fi
 
+if [ -n "$BASH_VERSION" ]; then
+  if [ -f "$HOME/.bashrc" ];then
+    source "$HOME/.bashrc"
+  fi
+fi
 

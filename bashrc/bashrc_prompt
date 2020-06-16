@@ -1,0 +1,21 @@
+
+precmd() {
+  EXIT_STATUS=$?
+  RESET=$(tput sgr0 2>/dev/null || echo -e "\e[0m")
+  MAGENTA=$(tput setaf 5 2>/dev/null || echo -e "\e[35m")
+  GREEN=$(tput setaf 2 2>/dev/null || echo -e "\e[32m")
+  RED=$(tput setaf 1 2>/dev/null || echo -e "\e[31m")
+
+  if [ $EXIT_STATUS -ne 130 ]; then
+    if [ $EXIT_STATUS -eq 0 ]; then
+      PS1="\[$GREEN\][\t] \[$RESET\]\$ "
+    else
+      PS1="\[$GREEN\][\t] \[$RED\]\$ \[$RESET\]"
+    fi
+  fi
+
+  echo -e "$MAGENTA[$(whoami)@$(hostname)]$RESET ${PWD//$HOME/'~'}"
+}
+
+bind '"\e[3~"':delete-char
+PROMPT_COMMAND="precmd; $PROMPT_COMMAND"
