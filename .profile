@@ -7,7 +7,9 @@ fi
 
 if [ -n "$BASH_VERSION" ]; then
   if [ -f "$HOME/.bashrc" ];then
-    source "$HOME/.bashrc"
+    if [ -n "$NOT_LOAD_BASHRC" ]; then
+      source "$HOME/.bashrc"
+    fi
   fi
 fi
 
