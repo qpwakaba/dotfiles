@@ -1,4 +1,4 @@
-#/bin/sh
+#/usr/bin/env bash
 
 DOTPATH=~/dotfiles
 
@@ -7,6 +7,9 @@ do
   [ "$f" = ".git" ] && continue
   [ "$f" = ".ssh" ] && continue
 
+  if [ -f "$HOME/$f" -a ! -L "$HOME/$f" ]; then
+    mv "$HOME/$f" "$HOME/.local/${f#.}"
+  fi
   ln -snfv "$DOTPATH/$f" "$HOME"/"$f"
 done
 
