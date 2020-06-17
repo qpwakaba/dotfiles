@@ -6,6 +6,8 @@ precmd() {
   GREEN=$(tput setaf 2 2>/dev/null || echo -e "\e[32m")
   RED=$(tput setaf 1 2>/dev/null || echo -e "\e[31m")
 
+  HOSTNAME=$([[ -v PROMPT_HOSTNAME ]] && echo $PROMPT_HOSTNAME || hostname)
+
   if [ $EXIT_STATUS -ne 130 ]; then
     if [ $EXIT_STATUS -eq 0 ]; then
       PS1="\[$GREEN\][\t] \[$RESET\]\$ "
@@ -14,7 +16,7 @@ precmd() {
     fi
   fi
 
-  echo -e "$MAGENTA[$(whoami)@$(hostname)]$RESET ${PWD//$HOME/'~'}"
+  echo -e "$MAGENTA[$(whoami)@$HOSTNAME]$RESET ${PWD//$HOME/'~'}"
 }
 
 bind '"\e[3~"':delete-char

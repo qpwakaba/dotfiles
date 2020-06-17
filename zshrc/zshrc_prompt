@@ -21,6 +21,7 @@ TMOUT=1
 precmd() {
   EXIT_STATUS=$?
 
+  HOSTNAME=$([ -n "$PROMPT_HOSTNAME" ] && echo $PROMPT_HOSTNAME || hostname)
   if [ $EXIT_STATUS -ne 130 ]; then
     if [ $EXIT_STATUS -eq 0 ]; then
       PROMPT="%{${fg[green]}%}[%D{%T}]%F{white} %#%f %{${reset_color}%}"
@@ -29,6 +30,6 @@ precmd() {
     fi
   fi
 
-  print -P "%{${fg[magenta]}%}[%n@%m]%{${reset_color}%} %~"
+  print -P "%{${fg[magenta]}%}[%n@${HOSTNAME}]%{${reset_color}%} %~"
 }
 
