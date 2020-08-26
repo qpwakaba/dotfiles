@@ -1,8 +1,4 @@
-if [ -z "$DOTFILES_HOME" ]; then
-  NOT_LOAD_BASHRC=true
-  source ~/.profile
-  return
-fi
+source ~/.profile
 
 for rcfile in $(find $DOTFILES_HOME/bashrc -type f -not -path '*/\.*'); do
   source $rcfile

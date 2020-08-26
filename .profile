@@ -5,11 +5,3 @@ if [ -f "$HOME/.local/profile" ]; then
   export PATH="$DOTFILES_HOME/bin:$PATH"
 fi
 
-if [ -n "$BASH_VERSION" ]; then
-  if [ -f "$HOME/.bashrc" ];then
-    if [ -n "$NOT_LOAD_BASHRC" ]; then
-      source "$HOME/.bashrc"
-    fi
-  fi
-fi
-
