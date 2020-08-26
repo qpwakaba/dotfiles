@@ -7,12 +7,11 @@ precmd() {
   RED=$(tput setaf 1 2>/dev/null || echo -e "\e[31m")
 
   HOSTNAME=$([[ -v PROMPT_HOSTNAME ]] && echo $PROMPT_HOSTNAME || hostname)
-
   if [ $EXIT_STATUS -ne 130 ]; then
     if [ $EXIT_STATUS -eq 0 ]; then
-      PS1="\[$GREEN\][\t] \[$RESET\]\$ "
+      PS1="$GREEN[\t] $RESET\$ "
     else
-      PS1="\[$GREEN\][\t] \[$RED\]\$ \[$RESET\]"
+      PS1="$GREEN[\t] $RED\$ $RESET"
     fi
   fi
 
@@ -20,4 +19,9 @@ precmd() {
 }
 
 bind '"\e[3~"':delete-char
+if [ -n "$PROMPT_COMMAND" ]; then
 PROMPT_COMMAND="precmd; $PROMPT_COMMAND"
+else
+PROMPT_COMMAND="precmd"
+fi
+
