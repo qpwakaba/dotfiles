@@ -1,6 +1,7 @@
 #/usr/bin/env bash
 
 DOTPATH=~/dotfiles
+(cd $DOTPATH && git submodule update --init --recursive)
 
 for f in .??*
 do

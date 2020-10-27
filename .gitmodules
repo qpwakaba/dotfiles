@@ -4,3 +4,6 @@
 [submodule "submodules/sentaku"]
 	path = submodules/sentaku
 	url = https://github.com/rcmdnk/sentaku.git
+[submodule "submodules/wget-curl"]
+	path = submodules/wget-curl
+	url = https://github.com/somasis/wget-curl.git
