@@ -3,5 +3,9 @@
 	email = King.qpwakaba@gmail.com
 [merge]
 	tool = vimdiff
+	ff = false
 [core]
 	editor = vim -c \"set fenc=utf-8\"
+[pull]
+	ff = only
+	rebase = false
