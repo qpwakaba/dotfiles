@@ -25,3 +25,5 @@ else
 PROMPT_COMMAND="precmd"
 fi
 
+shopt -s autocd
+

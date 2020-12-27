@@ -4,10 +4,10 @@ alias 'cd...'='cd ..'
 
 cd ()
 {
-  to="$1"
+  to="$@"
   if [ -z "$to" ]; then
     to="$HOME"
   fi
-  pushd "$to" >/dev/null && ls
+  pushd $to >/dev/null && ls
 }
 

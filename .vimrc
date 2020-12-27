@@ -28,7 +28,7 @@ set incsearch
 set formatoptions-=ro
 
 "noremap ; :
-nnoremap q <NOP>
+"nnoremap q <NOP>
 "vnoremap p "_dP
 "nnoremap p ]p
 "nnoremap <silent> p p`[=`]`]

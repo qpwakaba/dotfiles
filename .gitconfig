@@ -6,6 +6,7 @@
 	ff = false
 [core]
 	editor = vim -c \"set fenc=utf-8\"
+	autocrlf = input
 [pull]
 	ff = only
 	rebase = false
