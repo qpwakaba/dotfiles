@@ -46,6 +46,8 @@ noremap <C-w><C-c> <Nop>
 noremap <C-w>c <Nop>
 noremap 0 ^
 noremap ^ 0
+noremap r<C-c> <Nop>
+inoremap <Home> <C-o>^
 if has('terminal')
   tnoremap <C-w>gt <C-w>:tabn<CR>
   tnoremap <C-w>gT <C-w>:tabN<CR>
@@ -55,9 +57,33 @@ nnoremap <C-w>gT :tabN<CR>
 noremap <silent> <C-w><C-l> :redraw!<CR>
 noremap <M-w> :w<CR>
 noremap <Esc>w :w<CR>
+inoremap <Nul> <C-n>
 command -nargs=* W w <args>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+
+inoremap <expr> <BS> <SID>BackspaceOrDeleteIndent()
+inoremap <expr> <Delete> <SID>DeleteOrDeleteIndent()
+
+function s:BackspaceOrDeleteIndent()
+  let l:curpos = getcurpos()
+  let l:left = strcharpart(getline('.'), 0, l:curpos[2])
+  if (l:left =~ "^ *$")
+    return "\<C-w>\<C-w>"
+  else
+    return "\<BS>"
+  endif
+endfunction
+
+function s:DeleteOrDeleteIndent()
+  let l:curpos = getcurpos()
+  let l:right = strcharpart(getline('.'), l:curpos[2])
+  if (l:right == '')
+    return "\<Down>\<C-o>^\<C-w>\<C-w>"
+  else
+    return "\<Delete>"
+  endif
+endfunction
 
 "augroup mlclose
 "  autocmd!
