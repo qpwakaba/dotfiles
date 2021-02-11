@@ -37,7 +37,7 @@ inoremap <CR> <C-g>u<CR>
 inoremap <C-j> <C-g>u<C-j>
 inoremap <C-w> <C-g>u<C-w>
 inoremap <C-s> <C-x>
-imap <C-c> <C-Esc>
+inoremap <C-c> <C-Esc>:call setline('.', substitute(getline('.'), '^ *$', '', ''))<CR>
 noremap <S-j> <C-d>
 noremap <S-k> <C-u>
 noremap <C-j> <C-f>
