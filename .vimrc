@@ -29,7 +29,6 @@ set formatoptions-=ro
 
 "noremap ; :
 "nnoremap q <NOP>
-"vnoremap p "_dP
 "nnoremap p ]p
 "nnoremap <silent> p p`[=`]`]
 "nnoremap <silent> P P`[=`]`]
@@ -37,7 +36,27 @@ inoremap <CR> <C-g>u<CR>
 inoremap <C-j> <C-g>u<C-j>
 inoremap <C-w> <C-g>u<C-w>
 inoremap <C-s> <C-x>
-inoremap <C-c> <C-Esc>:call setline('.', substitute(getline('.'), '^ *$', '', ''))<CR>
+inoremap <C-c> <C-Esc>:call <SID>DeleteSpaceLine()<CR>
+
+function s:DeleteSpaceLine()
+  let l:current = getline('.')
+  let l:indented = substitute(l:current, '^ *$', '', '')
+  if (l:current != l:indented)
+    call setline('.', l:indented)
+  endif
+endfunction
+
+vnoremap <expr> p <SID>PasteWithoutYank()
+function s:PasteWithoutYank()
+  let l:info = getbufinfo(bufname())[0]
+  if (l:info.lnum != l:info.linecount)
+    return '"_xP'
+  else
+    return '"_xp'
+  fi
+endfunction
+
+
 noremap <S-j> <C-d>
 noremap <S-k> <C-u>
 noremap <C-j> <C-f>
@@ -62,38 +81,46 @@ command -nargs=* W w <args>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-inoremap <expr> <BS> <SID>BackspaceOrDeleteIndent()
-inoremap <expr> <Delete> <SID>DeleteOrDeleteIndent()
+inoremap <expr> <BS> <SID>DeleteLeft(getcurpos())
+inoremap <expr> <Delete> <SID>DeleteRight(getcurpos())
 
-function s:BackspaceOrDeleteIndent()
-  let l:curpos = getcurpos()
-  let l:left = strcharpart(getline('.'), 0, l:curpos[2])
-  if (l:left =~ "^ *$")
-    return "\<C-w>\<C-w>"
-  else
-    return "\<BS>"
+function s:DeleteLeft(curpos)
+  let l:left = strpart(getline(a:curpos[1]), 0, a:curpos[2] - 1)
+  if (l:left =~ "^  *$")
+    if (a:curpos[1] > 1)
+      let l:current_indent = strlen(l:left)
+      let l:above_indent = strlen(matchstr(getline(a:curpos[1] - 1), '^ *'))
+      if (l:current_indent > l:above_indent)
+        return repeat("\<C-h>", l:current_indent - l:above_indent)
+      endif
+      return "\<C-w>"
+    endif
   endif
+  return "\<BS>"
 endfunction
 
-function s:DeleteOrDeleteIndent()
-  let l:curpos = getcurpos()
-  let l:right = strcharpart(getline('.'), l:curpos[2])
+function s:DeleteRight(curpos)
+  let l:right = strpart(getline(a:curpos[1]), a:curpos[2] - 1)
   if (l:right == '')
-    return "\<Down>\<C-o>^\<C-w>\<C-w>"
+    let l:below_indent = strlen(matchstr(getline(a:curpos[1] + 1), '^ *'))
+    return repeat("\<Delete>", 1 + l:below_indent)
   else
     return "\<Delete>"
   endif
 endfunction
 
-"augroup mlclose
-"  autocmd!
-"  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
-"  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
-"augroup END
+if (exists('$WSLENV'))
+  set mouse+=a
+  cnoremap <S-Insert> <C-r>=system("powershell.exe -c Get-Clipboard \| sed 's/\r//g'")<CR><BS>
+  inoremap <S-Insert> <C-r>=system("powershell.exe -c Get-Clipboard \| sed 's/\r//g'")<CR><BS>
+  tnoremap <S-Insert> <C-w>=system("powershell.exe -c Get-Clipboard \| sed 's/\r//g'")<CR><BS>
+  vnoremap <silent> <C-Insert> :w !clip.exe<CR><CR>
+endif
 
 set noequalalways
 
 set wildmenu
+set wildmode=longest:full,full
 set completeopt=menuone,longest
 set noinfercase
 set wildignorecase
