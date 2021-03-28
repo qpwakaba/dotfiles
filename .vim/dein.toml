@@ -1,0 +1,75 @@
+# ファイルなどのあいまい検索
+[[plugins]]
+repo = 'junegunn/fzf'
+build_on = '''
+./install -all
+'''
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+
+# ヘルプの日本語化
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+# 置換のプレビュー
+[[plugins]]
+repo = 'markonm/traces.vim'
+
+# Google翻訳
+[[plugins]]
+repo = 'skanehira/translate.vim'
+
+## lint
+#[[plugins]]
+#repo = 'dense-analysis/ale'
+#hook_add = '''
+#let g:ale_linters = {
+#\ 'cs': ['OmniSharp']
+#\}
+#'''
+
+# file tree
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+
+# https://www.toumasu-program.net/entry/2019/01/28/105352
+hook_add = '''
+let g:NERDTreeWinSize = 20
+augroup NERDTREE
+  autocmd!
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+augroup END
+'''
+[[plugins]]
+repo = 'jistr/vim-nerdtree-tabs'
+
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+let g:indentLine_setConceal = 0
+'''
+
+[[plugins]]
+repo = 'Raimondi/delimitMate'
+hook_add = '''
+imap <CR> <Plug>delimitMateCR
+inoremap (<C-c> (<C-c>
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+hook_add = '''
+let g:neosnippet#snippets_directory='~/.vim/neosnippet/snippets/'
+imap <expr> <TAB> pumvisible() ? "\<C-n>" : neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+'''
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+
+# finder
+[[plugins]]
+repo = 'liuchengxu/vim-clap'
