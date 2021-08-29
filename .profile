@@ -5,3 +5,6 @@ if [ -f "$HOME/.local/profile" ]; then
   export PATH="$DOTFILES_HOME/bin:$PATH"
 fi
 
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
