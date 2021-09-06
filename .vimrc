@@ -1,3 +1,6 @@
+set t_u7=
+set t_RV=
+
 " おすすめプラグイン 〜 Vimはいいぞ！ゴリラと学ぶVim講座(7) https://knowledge.sakura.ad.jp/23248/
 " dein.vim の導入
 " dein.vim settings {{{
