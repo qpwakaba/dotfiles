@@ -12,7 +12,7 @@ fi
 alias ":tmux-reload"="tmux source-file ~/.tmux.conf"
 alias ":tmux-attach"="tmux attach-session"
 alias ":tmux-detach"="sudo -k; tmux detach-client"
-alias ":tmux-display"="export $(tmux show-env | grep ^DISPLAY=)"
+alias ":tmux-display"='export $(tmux show-env | grep ^DISPLAY=)'
 
 alias ":shell-reload"="exec $SHELL"
 
