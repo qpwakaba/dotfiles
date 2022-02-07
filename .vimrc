@@ -188,6 +188,16 @@ augroup qpwakaba_keymap
     let l:left = strpart(getline(a:curpos[1]), 0, a:curpos[2] - 1)
     if (l:left =~ "^  *$")
       if (a:curpos[1] > 1)
+        return "\<C-w>"
+      endif
+    endif
+    return "\<Plug>(qpwakaba_keymap_orig_BS)"
+  endfunction
+
+  function s:DeleteLeftOld(curpos)
+    let l:left = strpart(getline(a:curpos[1]), 0, a:curpos[2] - 1)
+    if (l:left =~ "^  *$")
+      if (a:curpos[1] > 1)
         let l:current_indent = strlen(l:left)
         let l:above_indent = strlen(matchstr(getline(a:curpos[1] - 1), '^ *'))
         if (l:current_indent > l:above_indent)
