@@ -232,7 +232,7 @@ nnoremap <C-w>gt :tabn<CR>
 nnoremap <C-w>gT :tabN<CR>
 noremap <silent> <C-w><C-l> :redraw!<CR>
 noremap <M-w> :w<CR>
-noremap <Esc>w :w<CR>
+"noremap <Esc>w :w<CR>
 inoremap <Nul> <C-n>
 command -nargs=* W w <args>
 cnoremap <C-p> <Up>
