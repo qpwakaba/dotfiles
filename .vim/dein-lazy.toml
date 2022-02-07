@@ -3,6 +3,7 @@
 repo = 'OmniSharp/omnisharp-vim'
 on_ft = ['cs']
 hook_source = '''
+filetype indent plugin on
 augroup Keybind_OmniSharp
   function! s:set_omnisharp_keybind()
     nnoremap <buffer> <F2> <Cmd>OmniSharpRename<CR>
