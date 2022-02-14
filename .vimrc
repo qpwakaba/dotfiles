@@ -34,7 +34,7 @@ if dein#load_state(s:dein_dir)
   if filereadable(s:toml)
     call dein#load_toml(s:toml, {'lazy': 0})
   endif
-  if filereadable(s:toml)
+  if filereadable(s:lazy)
     call dein#load_toml(s:lazy, {'lazy': 1})
   endif
 
@@ -50,7 +50,7 @@ if dein#load_state(s:dein_dir)
   if filereadable(s:toml)
     call dein#load_toml(s:toml, {'lazy': 0})
   endif
-  if filereadable(s:toml)
+  if filereadable(s:lazy)
     call dein#load_toml(s:lazy, {'lazy': 1})
   endif
 
