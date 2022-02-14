@@ -56,6 +56,9 @@ repo = 'Raimondi/delimitMate'
 hook_add = '''
 imap <CR> <Plug>delimitMateCR
 inoremap (<C-c> (<C-c>
+inoremap "<C-c> "<C-c>
+inoremap {<C-c> {<C-c>
+inoremap [<C-c> [<C-c>
 '''
 
 [[plugins]]
