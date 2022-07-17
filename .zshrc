@@ -1,8 +1,8 @@
-. $HOME/.profile
+. "$HOME/.profile"
 
 source "$DOTFILES_HOME/rc"
 for rcfile in $(find $DOTFILES_HOME/zshrc -type f -not -path '*/\.*'); do
-  . $rcfile
+  . "$rcfile"
 done
 
 umask 022
