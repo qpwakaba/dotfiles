@@ -314,10 +314,10 @@ augroup HighlightTrailingSpaces
   autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
 augroup END
 
-noremap <Down> gj
-noremap <Up>   gk
-inoremap <silent> <Down> <C-o>gj
-inoremap <silent> <Up>   <C-o>gk
+noremap <expr> <Down> popup_findinfo() != 0 ? "\<Down>" : "gj"
+noremap <expr> <Up>   popup_findinfo() != 0 ? "\<Up>"   : "gk"
+inoremap <silent> <expr> <Down> popup_findinfo() != 0 ? "\<Down>" : "\<C-o>gj"
+inoremap <silent> <expr> <Up>   popup_findinfo() != 0 ? "\<Up>"   : "\<C-o>gk"
 
 set helplang=ja
 
@@ -376,3 +376,7 @@ function! s:vimrc_local(loc)
   endfor
 endfunction
 
+hi link ALEError Error
+hi link ALEWarning Todo
+hi XmlTag ctermfg=153
+hi link XmlTagName XmlTag

@@ -56,7 +56,10 @@ repo = 'Raimondi/delimitMate'
 hook_add = '''
 imap <CR> <Plug>delimitMateCR
 inoremap (<C-c> (<C-c>
+inoremap '<C-c> '<C-c>
+inoremap ''<C-c> ''<C-c>
 inoremap "<C-c> "<C-c>
+inoremap ""<C-c> ""<C-c>
 inoremap {<C-c> {<C-c>
 inoremap [<C-c> [<C-c>
 '''
@@ -73,6 +76,18 @@ repo = 'Shougo/neosnippet-snippets'
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 
-# finder
+# finder/selector
 [[plugins]]
 repo = 'liuchengxu/vim-clap'
+
+# editorconfig
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+# binary editor
+[[plugins]]
+repo = 'Shougo/vinarise.vim'
+
