@@ -1,5 +1,6 @@
 . $HOME/.profile
 
+source "$DOTFILES_HOME/rc"
 for rcfile in $(find $DOTFILES_HOME/zshrc -type f -not -path '*/\.*'); do
   . $rcfile
 done

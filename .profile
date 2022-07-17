@@ -9,15 +9,3 @@ if [ -f "$HOME/.local/profile" ]; then
   export PATH="$DOTFILES_HOME/bin:$PATH"
 fi
 
-alias ":tmux-reload"="tmux source-file ~/.tmux.conf"
-alias ":tmux-attach"="tmux attach-session"
-alias ":tmux-detach"="sudo -k; tmux detach-client"
-alias ":tmux-display"='export $(tmux show-env | grep ^DISPLAY=)'
-
-alias ":shell-reload"="exec $SHELL"
-
-alias "detach"=":tmux-detach"
-
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-
