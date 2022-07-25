@@ -1,5 +1,5 @@
 export WWW_HOME='http://www.google.co.jp/'
-if tty | grep 'tty' >/dev/null 2>/dev/null; then
+if ! [ -v WSL_DISTRO_NAME ] && tty | grep 'tty' >/dev/null 2>/dev/null; then
   export LANG=C
   export LC_ALL=C
 fi
