@@ -1,8 +1,9 @@
 # Omnisharp
 [[plugins]]
 repo = 'OmniSharp/omnisharp-vim'
-on_ft = ['cs']
+on_ft = ['cs', 'xml']
 hook_source = '''
+filetype indent plugin on
 augroup Keybind_OmniSharp
   function! s:set_omnisharp_keybind()
     nnoremap <buffer> <F2> <Cmd>OmniSharpRename<CR>
@@ -17,9 +18,12 @@ augroup Keybind_OmniSharp
     inoremap <buffer> <C-K><C-J> <Cmd>OmniSharpSignatureHelp<CR>
     nnoremap <buffer> <C-K><C-J> <Cmd>OmniSharpSignatureHelp<CR>
     inoremap <buffer> <Nul> <C-x><C-o>
+    nnoremap <buffer> <C-L> <Cmd>OmniSharpGetCodeActions<CR>
+    inoremap <buffer> <C-L> <Cmd>OmniSharpGetCodeActions<CR>
+    nnoremap <buffer> gd <Cmd>OmniSharpGotoDefinition<CR>
   endfunction
   autocmd!
-  autocmd FileType cs call s:set_omnisharp_keybind()
+  autocmd FileType cs,xml call s:set_omnisharp_keybind()
 augroup END
 let g:OmniSharp_selector_ui = 'clap'
 let g:OmniSharp_highlight_groups = {

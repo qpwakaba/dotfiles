@@ -34,7 +34,7 @@ if dein#load_state(s:dein_dir)
   if filereadable(s:toml)
     call dein#load_toml(s:toml, {'lazy': 0})
   endif
-  if filereadable(s:toml)
+  if filereadable(s:lazy)
     call dein#load_toml(s:lazy, {'lazy': 1})
   endif
 
@@ -50,7 +50,7 @@ if dein#load_state(s:dein_dir)
   if filereadable(s:toml)
     call dein#load_toml(s:toml, {'lazy': 0})
   endif
-  if filereadable(s:toml)
+  if filereadable(s:lazy)
     call dein#load_toml(s:lazy, {'lazy': 1})
   endif
 
@@ -188,6 +188,16 @@ augroup qpwakaba_keymap
     let l:left = strpart(getline(a:curpos[1]), 0, a:curpos[2] - 1)
     if (l:left =~ "^  *$")
       if (a:curpos[1] > 1)
+        return "\<C-w>"
+      endif
+    endif
+    return "\<Plug>(qpwakaba_keymap_orig_BS)"
+  endfunction
+
+  function s:DeleteLeftOld(curpos)
+    let l:left = strpart(getline(a:curpos[1]), 0, a:curpos[2] - 1)
+    if (l:left =~ "^  *$")
+      if (a:curpos[1] > 1)
         let l:current_indent = strlen(l:left)
         let l:above_indent = strlen(matchstr(getline(a:curpos[1] - 1), '^ *'))
         if (l:current_indent > l:above_indent)
@@ -304,10 +314,10 @@ augroup HighlightTrailingSpaces
   autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
 augroup END
 
-noremap <Down> gj
-noremap <Up>   gk
-inoremap <silent> <Down> <C-o>gj
-inoremap <silent> <Up>   <C-o>gk
+noremap <expr> <Down> popup_findinfo() != 0 ? "\<Down>" : "gj"
+noremap <expr> <Up>   popup_findinfo() != 0 ? "\<Up>"   : "gk"
+inoremap <silent> <expr> <Down> popup_findinfo() != 0 ? "\<Down>" : "\<C-o>gj"
+inoremap <silent> <expr> <Up>   popup_findinfo() != 0 ? "\<Up>"   : "\<C-o>gk"
 
 set helplang=ja
 
@@ -366,3 +376,7 @@ function! s:vimrc_local(loc)
   endfor
 endfunction
 
+hi link ALEError Error
+hi link ALEWarning Todo
+hi XmlTag ctermfg=153
+hi link XmlTagName XmlTag
