@@ -1,0 +1,27 @@
+#!/bin/bash -eu
+
+SIZE_MAX=74994
+OSC=$'\e]'
+BEL=$'\a'
+
+escape_for_tmux() {
+  sed -e 's/^/\x1bPtmux;/' -e 's/\x1b/\x1b\x1b/g' -e 's/$/\x1b\\/'
+}
+
+data="$(cat "$@")"
+size="${#data}"
+
+if (( SIZE_MAX < size )); then
+  echo "Too long input (max size: $SIZE_MAX)" >&2
+  exit 1
+fi
+
+encoded_data="$(echo -n "$data" | base64 | tr -d '\r\n')"
+
+if [ "${TERM:0:4}" = "tmux" ]; then
+  echo -en "${OSC}52;c;${encoded_data}${BEL}" | escape_for_tmux
+else
+  echo -en "${OSC}52;c;${encoded_data}${BEL}"
+fi
+
+
