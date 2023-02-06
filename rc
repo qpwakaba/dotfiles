@@ -11,6 +11,6 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias sudi='sudo -i'
 
-if [ -f "~/.local/rc" ]; then
-  source "~/.local/rc"
+if [ -f "$HOME/.local/rc" ]; then
+  source "$HOME/.local/rc"
 fi
