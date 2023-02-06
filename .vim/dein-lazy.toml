@@ -27,6 +27,7 @@ augroup Keybind_OmniSharp
   endfunction
   autocmd!
   autocmd FileType cs,xml call s:set_omnisharp_keybind()
+  autocmd InsertLeave cs <buffer> OmniSharpCodeFormat
 augroup END
 let g:OmniSharp_selector_ui = 'clap'
 let g:OmniSharp_highlight_groups = {
