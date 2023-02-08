@@ -1,12 +1,12 @@
 
 precmd() {
   EXIT_STATUS=$?
-  RESET=$(tput sgr0 2>/dev/null || echo -e "\e[0m")
-  MAGENTA=$(tput setaf 5 2>/dev/null || echo -e "\e[35m")
-  GREEN=$(tput setaf 2 2>/dev/null || echo -e "\e[32m")
-  RED=$(tput setaf 1 2>/dev/null || echo -e "\e[31m")
+  RESET="$(tput sgr0 2>/dev/null || echo -e "\e[0m")"
+  MAGENTA="$(tput setaf 5 2>/dev/null || echo -e "\e[35m")"
+  GREEN="$(tput setaf 2 2>/dev/null || echo -e "\e[32m")"
+  RED="$(tput setaf 1 2>/dev/null || echo -e "\e[31m")"
 
-  HOSTNAME=$([[ -v PROMPT_HOSTNAME ]] && echo $PROMPT_HOSTNAME || hostname)
+  HOSTNAME="$([[ -v PROMPT_HOSTNAME ]] && echo $PROMPT_HOSTNAME || hostname)"
   if [ $EXIT_STATUS -ne 130 ]; then
     if [ $EXIT_STATUS -eq 0 ]; then
       PS1="$GREEN[\t] $RESET\$ "
