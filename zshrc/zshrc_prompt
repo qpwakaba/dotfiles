@@ -30,6 +30,6 @@ precmd() {
     fi
   fi
 
-  print -P "%{${fg[magenta]}%}[%n@${HOSTNAME}]%{${reset_color}%} %~"
+  print -P "%{${fg[magenta]}%}[${PROMPT_USERNAME:="$(print -P "%n")"}%{${reset_color}${fg[magenta]}%}@${HOSTNAME}${reset_color}${fg[magenta]}]%{${reset_color}%} %~"
 }
 

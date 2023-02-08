@@ -15,7 +15,7 @@ precmd() {
     fi
   fi
 
-  echo -e "$MAGENTA[$(whoami)@$HOSTNAME]$RESET ${PWD//$HOME/'~'}"
+  echo -e "$MAGENTA[${PROMPT_USERNAME:="$(whoami)"}${RESET}${MAGENTA}@${HOSTNAME}${RESET}${MAGENTA}]${RESET} ${PWD//$HOME/'~'}"
 }
 
 bind '"\e[3~"':delete-char
