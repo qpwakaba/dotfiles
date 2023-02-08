@@ -24,9 +24,9 @@ precmd() {
   HOSTNAME=$([ -n "$PROMPT_HOSTNAME" ] && echo $PROMPT_HOSTNAME || hostname)
   if [ $EXIT_STATUS -ne 130 ]; then
     if [ $EXIT_STATUS -eq 0 ]; then
-      PROMPT="%{${fg[green]}%}[%D{%T}]%F{white} %#%f %{${reset_color}%}"
+      PROMPT="%{${fg[green]}%}[%{${fg_bold[green]}%}%D{%T}%{${reset_color}${fg[green]}%}]%F{white} %#%f %{${reset_color}%}"
     else
-      PROMPT="%{${fg[green]}%}[%D{%T}]%F{red} %#%f %{${reset_color}%}"
+      PROMPT="%{${fg[green]}%}[%{${fg_bold[green]}%}%D{%T}%{${reset_color}${fg[green]}%}]%F{red} %#%f %{${reset_color}%}"
     fi
   fi
 
