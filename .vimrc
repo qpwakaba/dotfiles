@@ -1,3 +1,4 @@
+let mapleader = "\<Space>"
 set t_u7=
 set t_RV=
 
@@ -119,7 +120,6 @@ if &term =~ '^xterm'
   " insert mode
   let &t_SI .= "\<Esc>[5 q"
 endif
-
 
 inoremap <Plug>(qpwakaba_push_history) <C-g>u
 inoremap <Plug>(qpwakaba_noremap_CR) <CR>
