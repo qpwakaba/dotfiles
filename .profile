@@ -11,3 +11,7 @@ if [ -f "$HOME/.local/profile" ]; then
   export PATH="$DOTFILES_HOME/bin:$PATH"
 fi
 
+if command -v vim >/dev/null; then
+  export EDITOR=vim
+fi
+
