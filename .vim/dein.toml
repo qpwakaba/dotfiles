@@ -51,18 +51,18 @@ hook_add = '''
 let g:indentLine_setConceal = 0
 '''
 
-[[plugins]]
-repo = 'Raimondi/delimitMate'
-hook_add = '''
-imap <CR> <Plug>delimitMateCR
-inoremap (<C-c> (<C-c>
-inoremap '<C-c> '<C-c>
-inoremap ''<C-c> ''<C-c>
-inoremap "<C-c> "<C-c>
-inoremap ""<C-c> ""<C-c>
-inoremap {<C-c> {<C-c>
-inoremap [<C-c> [<C-c>
-'''
+# [[plugins]]
+# repo = 'Raimondi/delimitMate'
+# hook_add = '''
+# imap <CR> <Plug>delimitMateCR
+# inoremap (<C-c> (<C-c>
+# inoremap '<C-c> '<C-c>
+# inoremap ''<C-c> ''<C-c>
+# inoremap "<C-c> "<C-c>
+# inoremap ""<C-c> ""<C-c>
+# inoremap {<C-c> {<C-c>
+# inoremap [<C-c> [<C-c>
+# '''
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
@@ -94,14 +94,15 @@ repo = 'Shougo/vinarise.vim'
 [[plugins]]
 repo = 'easymotion/vim-easymotion'
 hook_add = '''
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+map  <Leader>F <Plug>(easymotion-bd-f)
+nmap <Leader>F <Plug>(easymotion-overwin-f)
 
 nmap s <Plug>(easymotion-overwin-f2)
 
-map <Leader>l <Plug>(easymotion-bd-jk)
-nmap <Leader>l <Plug>(easymotion-overwin-line)
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
 
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+map  <Leader>W <Plug>(easymotion-bd-w)
+nmap <Leader>W <Plug>(easymotion-overwin-w)
 '''
+
