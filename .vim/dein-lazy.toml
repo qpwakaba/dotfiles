@@ -84,3 +84,10 @@ hi link StringLiteral vsString
 repo = 'gorodinskiy/vim-coloresque'
 on_ft = ['css', 'html', 'less', 'sass', 'scss', 'stylus', 'vim']
 
+# Omnisharp
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = ['rs']
+hook_source = '''
+let g:rustfmt_autosave = 1
+'''

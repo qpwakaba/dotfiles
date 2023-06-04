@@ -41,6 +41,7 @@ augroup NERDTREE
   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 augroup END
 '''
+
 [[plugins]]
 repo = 'jistr/vim-nerdtree-tabs'
 
@@ -72,9 +73,6 @@ imap <expr> <TAB> pumvisible() ? "\<C-n>" : neosnippet#expandable_or_jumpable() 
 '''
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
 
 # finder/selector
 [[plugins]]
