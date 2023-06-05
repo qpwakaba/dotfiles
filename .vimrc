@@ -75,6 +75,7 @@ endif
 
 " vimrc
 syntax on
+filetype indent plugin on
 set background=dark
 set hlsearch
 set backspace=indent,eol,start
