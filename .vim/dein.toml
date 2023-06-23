@@ -114,6 +114,36 @@ hook_add = '''
 let g:rustfmt_autosave = 1
 '''
 
+# ref: いちからvimのrust開発環境を構築していく! (rust.vim, coc.nvim) https://zenn.dev/yuucu/articles/vimrc-rust-yuucu
+# Nodejs extension host for vim & neovim, load extensions like VSCode and host language servers.
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+build = '''
+yarn install --frozen-lockfile
+'''
+hook_add = '''
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Remap <C-f> and <C-b> to scroll float windows/popups
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+'''
+
 [[plugins]]
 repo = 'OmniSharp/omnisharp-vim'
 on_ft = ['cs', 'xml']
