@@ -21,15 +21,18 @@ TMOUT=1
 precmd() {
   EXIT_STATUS=$?
 
-  HOSTNAME=$([ -n "$PROMPT_HOSTNAME" ] && echo $PROMPT_HOSTNAME || hostname)
+  local PROMPT2
+  if [ -z "$HOSTNAME" ]; then
+    HOSTNAME="$([ -n "$PROMPT_HOSTNAME" ] && echo $PROMPT_HOSTNAME || hostname)"
+  fi
+  PROMPT2="%{${fg[magenta]}%}[${PROMPT_USERNAME:="$(print -P "%n")"}%{${reset_color}${fg[magenta]}%}@${HOSTNAME}${reset_color}${fg[magenta]}]%{${reset_color}%} %~"
   if [ $EXIT_STATUS -ne 130 ]; then
     if [ $EXIT_STATUS -eq 0 ]; then
       PROMPT="%{${fg[green]}%}[%{${fg_bold[green]}%}%D{%T}%{${reset_color}${fg[green]}%}]%F{white} %#%f %{${reset_color}%}"
     else
       PROMPT="%{${fg[green]}%}[%{${fg_bold[green]}%}%D{%T}%{${reset_color}${fg[green]}%}]%F{red} %#%f %{${reset_color}%}"
     fi
+    PROMPT="$PROMPT2"$'\n'"$PROMPT"
   fi
-
-  print -P "%{${fg[magenta]}%}[${PROMPT_USERNAME:="$(print -P "%n")"}%{${reset_color}${fg[magenta]}%}@${HOSTNAME}${reset_color}${fg[magenta]}]%{${reset_color}%} %~"
 }
 
