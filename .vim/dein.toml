@@ -49,7 +49,7 @@ repo = 'jistr/vim-nerdtree-tabs'
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = '''
-let g:indentLine_setConceal = 0
+" let g:indentLine_setConceal = 0
 '''
 
 # [[plugins]]
@@ -77,13 +77,14 @@ repo = 'Shougo/neosnippet-snippets'
 # finder/selector
 [[plugins]]
 repo = 'liuchengxu/vim-clap'
-hook_done_update = '''
-call clap#installer#build_maple()
-'''
+build = './install.sh'
 
 # editorconfig
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
+hook_add = '''
+au FileType gitcommit let b:EditorConfig_disable = 1
+'''
 
 [[plugins]]
 repo = 'tpope/vim-surround'
@@ -118,14 +119,14 @@ let g:rustfmt_autosave = 1
 # Nodejs extension host for vim & neovim, load extensions like VSCode and host language servers.
 [[plugins]]
 repo = 'neoclide/coc.nvim'
-build = '''
-yarn install --frozen-lockfile
-'''
+rev = 'release'
 hook_add = '''
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> <C-k><C-k> <Plug>(coc-codeaction-cursor)
 
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
@@ -142,87 +143,125 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
+
+hi CocInlayHint ctermbg=236 ctermfg=250
+
+hi CocErrorHighlight ctermfg=red cterm=reverse term=underline
+hi CocWarningHighlight ctermfg=yellow cterm=reverse term=underline
+hi CocInfoHighlight ctermfg=blue cterm=reverse term=underline
+hi CocHintHighlight cterm=underline term=underline
+
+"hi myCsKeyword ctermfg=81
+"hi myCsComment ctermfg=108
+"hi myCsCharStr ctermfg=174
+"hi csRepeat ctermfg=219
+"hi csInteger ctermfg=223
+
+"hi link csBoolean myCsKeyword
+"hi link csConditional myCsKeyword
+"hi link csModifier myCsKeyword
+"hi link csNew myCsKeyword
+"hi link csType myCsKeyword
+"  hi link csStorage csType
+"hi link csUnspecifiedStatement myCsKeyword
+"hi link csUnsupportedStatement myCsKeyword
+"hi link csAccess myCsKeyword
+"hi link csLineComment myCsComment
+"hi link csBlockComment myCsComment
+"
+"hi link csCharacter myCsCharStr
+"hi link csString myCsCharStr
+"
+"hi link csOpSymbols Normal
+"hi link csLogicSymbols Normal
 '''
 
 [[plugins]]
-repo = 'OmniSharp/omnisharp-vim'
-on_ft = ['cs', 'xml']
+repo = 'utubo/jumpcursor.vim'
 hook_add = '''
-let g:OmniSharp_server_use_net6 = 1
-let g:OmniSharp_server_type = 'roslyn'
-
-augroup Keybind_OmniSharp
-  function! s:set_omnisharp_keybind()
-    nnoremap <buffer> <F2> <Cmd>OmniSharpRename<CR>
-    nnoremap <buffer> <F12> <Cmd>OmniSharpGotoDefinition<CR>
-    nnoremap <buffer> <C-F12> <Cmd>OmniSharpFindUsages<CR>
-    inoremap <buffer> <C-K><C-K> <Cmd>OmniSharpGetCodeActions<CR>
-    nnoremap <buffer> <C-K><C-K> <Cmd>OmniSharpGetCodeActions<CR>
-    inoremap <buffer> <C-K><C-D> <Cmd>OmniSharpCodeFormat<CR>
-    nnoremap <buffer> <C-K><C-D> <Cmd>OmniSharpCodeFormat<CR>
-    inoremap <buffer> <C-K><C-I> <Cmd>OmniSharpDocumentation<CR>
-    nnoremap <buffer> <C-K><C-I> <Cmd>OmniSharpDocumentation<CR>
-    inoremap <buffer> <C-K><C-J> <Cmd>OmniSharpSignatureHelp<CR>
-    nnoremap <buffer> <C-K><C-J> <Cmd>OmniSharpSignatureHelp<CR>
-    inoremap <buffer> <Nul> <C-x><C-o>
-    nnoremap <buffer> <C-L> <Cmd>OmniSharpGetCodeActions<CR>
-    inoremap <buffer> <C-L> <Cmd>OmniSharpGetCodeActions<CR>
-    nnoremap <buffer> gd <Cmd>OmniSharpGotoDefinition<CR>
-  endfunction
-  autocmd!
-  autocmd FileType cs,xml call s:set_omnisharp_keybind()
-  autocmd InsertLeave cs <buffer> OmniSharpCodeFormat
-augroup END
-let g:OmniSharp_selector_ui = 'clap'
-let g:OmniSharp_highlight_groups = {
-\ 'ExtensionMethodName': 'vsExtensionMethodName',
-\ 'MethodName': 'vsMethodName',
-\ 'ParameterName': 'vsParameterName',
-\ 'TypeParameterName': 'vsTypeParameterName',
-\ 'PropertyName': 'vsPropertyName',
-\ 'FieldName': 'vsFieldName',
-\ 'LocalName': 'vsLocalName',
-\ 'ConstantName': 'vsConstant',
-\ 'InterfaceName': 'vsInterfaceName',
-\ 'ClassName': 'vsClassName',
-\ 'StructName': 'vsStructName',
-\ 'OperatorOverloaded': 'vsOperatorOverloaded',
-\ 'ControlKeyword': 'vsControlKeyword',
-\ 'Keyword': 'vsKeyword',
-\ 'StringLiteral': 'vsString',
-\ 'PreprocessorKeyword': 'vsPreprocessor',
-\ 'ExcludedCode': 'vsExcluded',
-\}
-hi Operator ctermfg=250
-hi link vsOperatorOverloaded Operator
-hi vsMethodName ctermfg=230
-hi link vsExtensionMethodName vsMethodName
-hi vsTypeParameterName ctermfg=193
-hi vsParameterName ctermfg=222
-hi vsLocalName ctermfg=252
-hi vsOperaterOverloaded ctermfg=7
-hi vsControlKeyword ctermfg=219
-hi vsKeyword ctermfg=153
-hi vsPropertyName ctermfg=254
-hi vsFieldName ctermfg=254
-hi vsConstant ctermfg=251
-hi vsInterfaceName ctermfg=122
-hi vsClassName ctermfg=79
-hi vsStructName ctermfg=113
-hi vsString ctermfg=216
-hi vsPreprocessor ctermfg=245
-hi link vsExcluded vsPreprocessor
-hi Identifier ctermfg=lightgray
-hi Comment ctermfg=darkgray
-hi link csType vsKeyword
-hi link csModifier vsKeyword
-hi link csAsync vsKeyword
-hi link csConstant vsConstant
-hi link csNumber vsConstant
-hi link csString vsString
-hi link csCharacter vsString
-hi link StringLiteral vsString
+nmap <CR> <Plug>(jumpcursor-jump)
+nnoremap <C-c> <Cmd>call jumpcursor#clear()<CR>
 '''
+
+#[[plugins]]
+#repo = 'OmniSharp/omnisharp-vim'
+#on_ft = ['cs', 'xml']
+#hook_add = '''
+#let g:OmniSharp_server_use_net6 = 1
+#let g:OmniSharp_server_type = 'roslyn'
+#
+#augroup Keybind_OmniSharp
+#  function! s:set_omnisharp_keybind()
+#    nnoremap <buffer> <F2> <Cmd>OmniSharpRename<CR>
+#    nnoremap <buffer> <F12> <Cmd>OmniSharpGotoDefinition<CR>
+#    nnoremap <buffer> <C-F12> <Cmd>OmniSharpFindUsages<CR>
+#    inoremap <buffer> <C-K><C-K> <Cmd>OmniSharpGetCodeActions<CR>
+#    nnoremap <buffer> <C-K><C-K> <Cmd>OmniSharpGetCodeActions<CR>
+#    inoremap <buffer> <C-K><C-D> <Cmd>OmniSharpCodeFormat<CR>
+#    nnoremap <buffer> <C-K><C-D> <Cmd>OmniSharpCodeFormat<CR>
+#    inoremap <buffer> <C-K><C-I> <Cmd>OmniSharpDocumentation<CR>
+#    nnoremap <buffer> <C-K><C-I> <Cmd>OmniSharpDocumentation<CR>
+#    inoremap <buffer> <C-K><C-J> <Cmd>OmniSharpSignatureHelp<CR>
+#    nnoremap <buffer> <C-K><C-J> <Cmd>OmniSharpSignatureHelp<CR>
+#    inoremap <buffer> <Nul> <C-x><C-o>
+#    nnoremap <buffer> <C-L> <Cmd>OmniSharpGetCodeActions<CR>
+#    inoremap <buffer> <C-L> <Cmd>OmniSharpGetCodeActions<CR>
+#    nnoremap <buffer> gd <Cmd>OmniSharpGotoDefinition<CR>
+#  endfunction
+#  autocmd!
+#  autocmd FileType cs,xml call s:set_omnisharp_keybind()
+#  autocmd InsertLeave cs <buffer> OmniSharpCodeFormat
+#augroup END
+#let g:OmniSharp_selector_ui = 'clap'
+#let g:OmniSharp_highlight_groups = {
+#\ 'ExtensionMethodName': 'vsExtensionMethodName',
+#\ 'MethodName': 'vsMethodName',
+#\ 'ParameterName': 'vsParameterName',
+#\ 'TypeParameterName': 'vsTypeParameterName',
+#\ 'PropertyName': 'vsPropertyName',
+#\ 'FieldName': 'vsFieldName',
+#\ 'LocalName': 'vsLocalName',
+#\ 'ConstantName': 'vsConstant',
+#\ 'InterfaceName': 'vsInterfaceName',
+#\ 'ClassName': 'vsClassName',
+#\ 'StructName': 'vsStructName',
+#\ 'OperatorOverloaded': 'vsOperatorOverloaded',
+#\ 'ControlKeyword': 'vsControlKeyword',
+#\ 'Keyword': 'vsKeyword',
+#\ 'StringLiteral': 'vsString',
+#\ 'PreprocessorKeyword': 'vsPreprocessor',
+#\ 'ExcludedCode': 'vsExcluded',
+#\}
+#hi Operator ctermfg=250
+#hi link vsOperatorOverloaded Operator
+#hi vsMethodName ctermfg=230
+#hi link vsExtensionMethodName vsMethodName
+#hi vsTypeParameterName ctermfg=193
+#hi vsParameterName ctermfg=222
+#hi vsLocalName ctermfg=252
+#hi vsOperaterOverloaded ctermfg=7
+#hi vsControlKeyword ctermfg=219
+#hi vsKeyword ctermfg=153
+#hi vsPropertyName ctermfg=254
+#hi vsFieldName ctermfg=254
+#hi vsConstant ctermfg=251
+#hi vsInterfaceName ctermfg=122
+#hi vsClassName ctermfg=79
+#hi vsStructName ctermfg=113
+#hi vsString ctermfg=216
+#hi vsPreprocessor ctermfg=245
+#hi link vsExcluded vsPreprocessor
+#hi Identifier ctermfg=lightgray
+#hi Comment ctermfg=darkgray
+#hi link csType vsKeyword
+#hi link csModifier vsKeyword
+#hi link csAsync vsKeyword
+#hi link csConstant vsConstant
+#hi link csNumber vsConstant
+#hi link csString vsString
+#hi link csCharacter vsString
+#hi link StringLiteral vsString
+#'''
 
 [[plugins]]
 repo = 'gorodinskiy/vim-coloresque'
