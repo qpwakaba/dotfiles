@@ -222,7 +222,7 @@ augroup END
 inoremap <C-j> <C-g>u<C-j>
 inoremap <C-w> <C-g>u<C-w>
 inoremap <C-s> <C-x>
-inoremap <C-c> <C-Esc>:call <SID>DeleteSpaceLine()<CR>
+inoremap <C-c> <C-Esc><Cmd>call <SID>DeleteSpaceLine()<CR>
 
 function s:DeleteSpaceLine()
   let l:current = getline('.')
@@ -266,6 +266,10 @@ noremap <M-w> :w<CR>
 command -nargs=* W w <args>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+nnoremap <Space><Space> <Cmd>let &cursorline = 1 - &cursorline<CR>
+
 
 
 if (exists('$WSLENV'))
