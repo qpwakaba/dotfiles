@@ -8,5 +8,6 @@
   },
   "coc.preferences.formatOnSaveFiletypes": [
     "cs"
-  ]
+  ],
+  "html.completion.attributeDefaultValue": "empty"
 }
