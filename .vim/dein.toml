@@ -176,12 +176,12 @@ hi CocHintHighlight cterm=underline term=underline
 "hi link csLogicSymbols Normal
 '''
 
-[[plugins]]
-repo = 'utubo/jumpcursor.vim'
-hook_add = '''
-nmap <CR> <Plug>(jumpcursor-jump)
-nnoremap <C-c> <Cmd>call jumpcursor#clear()<CR>
-'''
+#[[plugins]]
+#repo = 'utubo/jumpcursor.vim'
+#hook_add = '''
+#nmap <CR> <Plug>(jumpcursor-jump)
+#nnoremap <C-c> <Cmd>call jumpcursor#clear()<CR>
+#'''
 
 #[[plugins]]
 #repo = 'OmniSharp/omnisharp-vim'
@@ -266,3 +266,4 @@ nnoremap <C-c> <Cmd>call jumpcursor#clear()<CR>
 [[plugins]]
 repo = 'gorodinskiy/vim-coloresque'
 on_ft = ['css', 'html', 'less', 'sass', 'scss', 'stylus', 'vim']
+
