@@ -21,7 +21,7 @@ TMOUT=1
 precmd() {
   EXIT_STATUS=$?
 
-  local PROMPT2 git_branch
+  local PROMPT2 git_branch prompt_git_branch
   git_branch="$(git branch --show-current 2>/dev/null)"
   prompt_git_branch="${git_branch:+" ["}$git_branch${git_branch:+"]"}"
   if [ -z "$HOSTNAME" ]; then

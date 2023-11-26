@@ -5,6 +5,8 @@ alias ":tmux-display"='export $(tmux show-env | grep ^DISPLAY=)'
 
 alias ":shell-reload"="exec $SHELL"
 
+alias ':disable-mouse'="echo -ne '\e[?9l'"
+
 alias "detach"=":tmux-detach"
 
 alias ls='ls --color=auto'
