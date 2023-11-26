@@ -21,7 +21,9 @@ TMOUT=1
 precmd() {
   EXIT_STATUS=$?
 
-  local PROMPT2
+  local PROMPT2 git_branch
+  git_branch="$(git branch --show-current 2>/dev/null)"
+  prompt_git_branch="${git_branch:+" ["}$git_branch${git_branch:+"]"}"
   if [ -z "$HOSTNAME" ]; then
     HOSTNAME="$([ -n "$PROMPT_HOSTNAME" ] && echo $PROMPT_HOSTNAME || hostname)"
   fi
@@ -32,7 +34,7 @@ precmd() {
     else
       PROMPT="%{${fg[green]}%}[%{${fg_bold[green]}%}%D{%T}%{${reset_color}${fg[green]}%}]%F{red} %#%f %{${reset_color}%}"
     fi
-    PROMPT="$PROMPT2"$'\n'"$PROMPT"
+    PROMPT="$PROMPT2$prompt_git_branch"$'\n'"$PROMPT"
   fi
 }
 

@@ -7,6 +7,9 @@ precmd() {
   RED="$(tput setaf 1 2>/dev/null || echo -e "\e[31m")"
   BOLD="$(tput bold 2>/dev/null || echo -e "\e[1m")"
 
+  local git_branch prompt_git_branch
+  git_branch="$(git branch --show-current 2>/dev/null)"
+  prompt_git_branch="${git_branch:+" ["}$git_branch${git_branch:+"]"}"
   HOSTNAME="$([[ -v PROMPT_HOSTNAME ]] && echo $PROMPT_HOSTNAME || hostname)"
   if [ $EXIT_STATUS -ne 130 ]; then
     if [ $EXIT_STATUS -eq 0 ]; then
@@ -16,7 +19,7 @@ precmd() {
     fi
   fi
 
-  echo -e "$MAGENTA[${PROMPT_USERNAME:="$(whoami)"}${RESET}${MAGENTA}@${HOSTNAME}${RESET}${MAGENTA}]${RESET} ${PWD//$HOME/'~'}"
+  echo -e "$MAGENTA[${PROMPT_USERNAME:="$(whoami)"}${RESET}${MAGENTA}@${HOSTNAME}${RESET}${MAGENTA}]${RESET} ${PWD//$HOME/'~'}$prompt_git_branch"
 }
 
 bind '"\e[3~"':delete-char
