@@ -15,3 +15,6 @@ if command -v vim >/dev/null; then
   export EDITOR=vim
 fi
 
+if ! [[ -v XAUTHORITY ]]; then
+  export XAUTHORITY="$HOME/.Xauthority"
+fi
