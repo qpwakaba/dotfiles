@@ -126,13 +126,21 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+nnoremap <silent> <F2> <Plug>(coc-rename)
+nnoremap <silent> <F12> <Cmd>split<CR><Plug>(coc-definition)
+vnoremap <silent> = <Plug>(coc-format-selected)
+
 nmap <silent> <C-k><C-k> <Plug>(coc-codeaction-cursor)
 
 if has('nvim')
+  nnoremap <silent> <c-space> <Cmd>call CocActionAsync('doHover')<CR>
   inoremap <silent><expr> <c-space> coc#refresh()
 else
+  nnoremap <silent> <c-@> <Cmd>call CocActionAsync('doHover')<CR>
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
+
+nnoremap <silent> <C-k><C-d> <Cmd> CocCommand editor.action.formatDocument<CR>
 
 " Remap <C-f> and <C-b> to scroll float windows/popups
 if has('nvim-0.4.0') || has('patch-8.2.0750')
