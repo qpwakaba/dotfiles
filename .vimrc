@@ -100,9 +100,12 @@ set scrolloff=8
 set noshowcmd
 set ignorecase
 set smartcase
-set foldlevel=999999
 set incsearch
 set formatoptions-=ro
+
+set foldlevel=999999
+autocmd InsertLeave,WinEnter * setlocal foldmethod=syntax
+autocmd InsertEnter,WinLeave * setlocal foldmethod=manual
 
 " Cursor in terminal
 " https://vim.fandom.com/wiki/Configuring_the_cursor
