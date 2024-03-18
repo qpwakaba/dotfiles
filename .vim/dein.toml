@@ -152,12 +152,24 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
-hi CocInlayHint ctermbg=236 ctermfg=250
+" Highlight the symbol and its references when holding the cursor
+augroup dein_coc_hover
+function! s:do_hover()
+  call CocActionAsync('highlight')
+endfunction
+autocmd CursorHold * silent call s:do_hover()
+augroup END
 
 hi CocErrorHighlight ctermfg=red cterm=reverse term=underline
-hi CocWarningHighlight ctermfg=yellow cterm=reverse term=underline
+hi CocWarningHighlight ctermfg=darkyellow cterm=reverse term=underline
 hi CocInfoHighlight ctermfg=blue cterm=reverse term=underline
 hi CocHintHighlight cterm=underline term=underline
+
+hi CocInlayHint ctermbg=236 ctermfg=250
+
+hi CocFloating ctermbg=23
+"hi CocWarningVirtualText ctermfg=130
+hi CocWarningFloat ctermfg=3 ctermbg=8
 
 "hi myCsKeyword ctermfg=81
 "hi myCsComment ctermfg=108

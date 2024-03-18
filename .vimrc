@@ -87,6 +87,7 @@ else
   set vb t_vb=
 endif
 
+set updatetime=500
 set number
 set expandtab
 set tabstop=2
