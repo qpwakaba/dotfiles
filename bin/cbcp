@@ -1,0 +1,38 @@
+#!/bin/bash -eu
+
+is_wsl() {
+  [[ -v WSLENV ]] || [[ -v WSL_DISTRO_NAME ]] || [[ -v CPCB_FORCE_WSL ]]
+}
+
+convert_utf16_iconv() {
+  iconv --to-code=UTF-16
+}
+
+convert_utf16_nkf() {
+  nkf -w16
+}
+
+convert_utf16() {
+  if command -v iconv &>/dev/null; then
+    convert_utf16_iconv "$@"
+  elif command -v nkf &>/dev/null; then
+    convert_utf16_nkf "$@"
+  else
+    echo "Charset convert command detection failed. iconv or nkf commands are required." >&2
+    return 1
+  fi
+}
+
+if is_wsl; then
+  WSL_CLIP=
+  WSL_CLIP="$(command -v clip.exe)" ||
+    WSL_CLIP="$(command -v /mnt/c/Windows/System32/clip.exe)" ||
+    {
+      echo "clip.exe is not found. Check PATH env." >&2
+      exit 1
+    }
+  convert_utf16 | "$WSL_CLIP"
+else
+  echo "Environment detection failed. Use CPCB_FORCE_(WSL) environment." >&2
+  exit 1
+fi
