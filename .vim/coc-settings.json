@@ -4,17 +4,6 @@
       "command": "csharp-ls",
       "filetypes": ["cs"],
       "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
-    },
-    "cmake": {
-      "command": "neocmakelsp",
-      "args": ["--stdio"],
-      "filetypes": ["cmake"],
-      "rootPatterns": [
-        "build/"
-      ],
-      "initializationOptions": {
-        "buildDirectory": "build"
-      }
     }
   },
   "coc.preferences.formatOnSaveFiletypes": [
