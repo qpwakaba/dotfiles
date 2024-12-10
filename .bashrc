@@ -1,5 +1,5 @@
 if ! [[ -v DOTFILES_BASHRC_LOADED ]]; then
-  export DOTFILES_BASHRC_LOADED=1
+  DOTFILES_BASHRC_LOADED=1
   source "$HOME/.profile"
 
   source "$DOTFILES_HOME/rc"
