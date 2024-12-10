@@ -13,7 +13,7 @@ precmd() {
 
   local prompt_git_branch
   if [[ $DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY != $PWD ]]; then
-    local git_branch="$(git branch --show-current)"
+    local git_branch="$(git branch --show-current 2>/dev/null)"
     DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_BRANCH="${git_branch:+" ["}$git_branch${git_branch:+"]"}"
     DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY="$PWD"
   fi
