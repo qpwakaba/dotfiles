@@ -1,3 +1,5 @@
+# vim: set ft=bash:
+
 HISTFILE=$HOME/.bash_history
 HISTSIZE=100000
 SAVEHIST=100000

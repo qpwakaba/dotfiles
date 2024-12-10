@@ -1,3 +1,4 @@
+# vim: set ft=bash:
 
 alias 'cd..'='cd ..'
 alias 'cd...'='cd ..'

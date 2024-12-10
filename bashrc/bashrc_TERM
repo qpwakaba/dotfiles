@@ -1,3 +1,5 @@
+# vim: set ft=bash:
+
 IGNOREEOF=9
 
 stty start undef

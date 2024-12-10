@@ -1,2 +1,4 @@
+# vim: set ft=bash:
+
 source $DOTFILES_HOME/zshrc/zshrc_aliases
 
