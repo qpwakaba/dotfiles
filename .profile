@@ -9,11 +9,6 @@ if ! [ "${DOTFILES_PROFILE_LOADED:-0}" != 1 ]; then
     export LC_ALL=C.UTF-8
   fi
 
-  if [ -f "$HOME/.local/profile" ]; then
-    . $HOME/.local/profile
-    export PATH="$DOTFILES_HOME/bin:$PATH"
-  fi
-
   if command -v vim >/dev/null; then
     export EDITOR=vim
   fi
@@ -21,4 +16,10 @@ if ! [ "${DOTFILES_PROFILE_LOADED:-0}" != 1 ]; then
   if [ "${XAUTHORITY:-}" = "" ]; then
     export XAUTHORITY="$HOME/.Xauthority"
   fi
+
+  if [ -f "$HOME/.local/profile" ]; then
+    . $HOME/.local/profile
+    export PATH="$DOTFILES_HOME/bin:$PATH"
+  fi
+
 fi
