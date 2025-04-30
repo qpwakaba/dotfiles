@@ -5,3 +5,5 @@ IGNOREEOF=9
 stty start undef
 stty stop undef
 
+stty werase undef
+bind '"\C-w":unix-filename-rubout'
