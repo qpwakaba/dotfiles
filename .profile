@@ -1,4 +1,4 @@
-if ! [ "${DOTFILES_PROFILE_LOADED:-0}" != 1 ]; then
+if [ "${DOTFILES_PROFILE_LOADED:-0}" != 1 ]; then
   export DOTFILES_PROFILE_LOADED=1
 
   export WWW_HOME='http://www.google.co.jp/'
