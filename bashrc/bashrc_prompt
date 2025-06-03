@@ -1,6 +1,6 @@
 # vim: set ft=bash:
 
-if [ -t 0 ]; then
+if [[ "$-" = *i* ]]; then
 
   DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY=
   DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_BRANCH=
