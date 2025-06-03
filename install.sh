@@ -20,6 +20,10 @@ fi
 if [ -f "$HOME/.local/profile" ]; then
   sed -e '/^export DOTFILES_HOME=.*$/d' -i "$HOME/.local/profile"
 fi
-echo "export DOTFILES_HOME=$(cd "$(dirname "$0")" && echo "$(pwd)")" >>"$HOME/.local/profile"
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+DOTFILES_CONFIG_HOME="$XDG_CONFIG_HOME/dotfiles"
+mkdir -p "$DOTFILES_CONFIG_HOME"
+echo "export DOTFILES_HOME=$(cd "$(dirname "$0")" && echo "$(pwd)")" >>"$DOTFILES_CONFIG_HOME/exports"
 
 

@@ -1,9 +1,11 @@
 # vim: set ft=bash:
 
-IGNOREEOF=9
+if [ -t 0 ]; then
+  IGNOREEOF=9
 
-stty start undef
-stty stop undef
+  stty start undef
+  stty stop undef
 
-stty werase undef
-bind '"\C-w":unix-filename-rubout'
+  stty werase undef
+  bind '"\C-w":unix-filename-rubout'
+fi

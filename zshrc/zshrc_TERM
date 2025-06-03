@@ -1,8 +1,10 @@
-autoload -U colors && colors
+if [ -t 0 ]; then
+  autoload -U colors && colors
 
-setopt IGNORE_EOF
+  setopt IGNORE_EOF
 
-stty start undef
-stty stop undef
-bindkey -e
+  stty start undef
+  stty stop undef
+  bindkey -e
 
+fi

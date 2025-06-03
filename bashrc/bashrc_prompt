@@ -1,47 +1,50 @@
 # vim: set ft=bash:
 
-DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY=
-DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_BRANCH=
-precmd() {
-  local EXIT_STATUS=$?
-  local RESET="\[$(tput sgr0 2>/dev/null || echo -e "\e[0m")\]"
-  local MAGENTA="\[$(tput setaf 5 2>/dev/null || echo -e "\e[35m")\]"
-  local GREEN="\[$(tput setaf 2 2>/dev/null || echo -e "\e[32m")\]"
-  local RED="\[$(tput setaf 1 2>/dev/null || echo -e "\e[31m")\]"
-  local BOLD="\[$(tput bold 2>/dev/null || echo -e "\e[1m")\]"
+if [ -t 0 ]; then
+
+  DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY=
+  DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_BRANCH=
+  precmd() {
+    local EXIT_STATUS=$?
+    local RESET="\[$(tput sgr0 2>/dev/null || echo -e "\e[0m")\]"
+    local MAGENTA="\[$(tput setaf 5 2>/dev/null || echo -e "\e[35m")\]"
+    local GREEN="\[$(tput setaf 2 2>/dev/null || echo -e "\e[32m")\]"
+    local RED="\[$(tput setaf 1 2>/dev/null || echo -e "\e[31m")\]"
+    local BOLD="\[$(tput bold 2>/dev/null || echo -e "\e[1m")\]"
 
 
-  local prompt_git_branch
-  if [[ $DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY != $PWD ]]; then
-    local git_branch="$(git branch --show-current 2>/dev/null)"
-    DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_BRANCH="${git_branch:+" ["}$git_branch${git_branch:+"]"}"
-    DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY="$PWD"
-  fi
-  prompt_git_branch="$DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_BRANCH"
+    local prompt_git_branch
+    if [[ $DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY != $PWD ]]; then
+      local git_branch="$(git branch --show-current 2>/dev/null)"
+      DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_BRANCH="${git_branch:+" ["}$git_branch${git_branch:+"]"}"
+      DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_DIRECTORY="$PWD"
+    fi
+    prompt_git_branch="$DOTFILES_BASHRC_PROMPT_PRECMD_PREVIOUS_BRANCH"
 
-  HOSTNAME="$([[ -v PROMPT_HOSTNAME ]] && echo $PROMPT_HOSTNAME || hostname)"
+    HOSTNAME="$([[ -v PROMPT_HOSTNAME ]] && echo $PROMPT_HOSTNAME || hostname)"
 
-  local line_1
-  if [ $EXIT_STATUS -ne 130 ]; then
-    if [ $EXIT_STATUS -eq 0 ]; then
-      line_2="$GREEN[$BOLD\t$RESET$GREEN] $RESET\$ "
+    local line_1
+    if [ $EXIT_STATUS -ne 130 ]; then
+      if [ $EXIT_STATUS -eq 0 ]; then
+        line_2="$GREEN[$BOLD\t$RESET$GREEN] $RESET\$ "
+      else
+        line_2="$GREEN[$BOLD\t$RESET$GREEN] $RED\$ $RESET"
+      fi
+    fi
+    local line_1="$MAGENTA[${PROMPT_USERNAME:="$(whoami)"}${RESET}${MAGENTA}@${HOSTNAME}${RESET}${MAGENTA}]${RESET} ${PWD//$HOME/'~'}$prompt_git_branch"
+
+    PS1="$line_1\n$line_2"
+  }
+
+  bind '"\e[3~"':delete-char
+  if ! echo "$PROMPT_COMMAND" | grep '\(^\|;\)[[:space:]]*precmd\(;\|$\)' >/dev/null; then
+    if [ -n "$PROMPT_COMMAND" ]; then
+      PROMPT_COMMAND="precmd; $PROMPT_COMMAND"
     else
-      line_2="$GREEN[$BOLD\t$RESET$GREEN] $RED\$ $RESET"
+      PROMPT_COMMAND="precmd"
     fi
   fi
-  local line_1="$MAGENTA[${PROMPT_USERNAME:="$(whoami)"}${RESET}${MAGENTA}@${HOSTNAME}${RESET}${MAGENTA}]${RESET} ${PWD//$HOME/'~'}$prompt_git_branch"
 
-  PS1="$line_1\n$line_2"
-}
+  shopt -s autocd
 
-bind '"\e[3~"':delete-char
-if ! echo "$PROMPT_COMMAND" | grep '\(^\|;\)[[:space:]]*precmd\(;\|$\)' >/dev/null; then
-  if [ -n "$PROMPT_COMMAND" ]; then
-  PROMPT_COMMAND="precmd; $PROMPT_COMMAND"
-  else
-  PROMPT_COMMAND="precmd"
-  fi
 fi
-
-shopt -s autocd
-
