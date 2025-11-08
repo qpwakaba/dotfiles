@@ -1,1 +1,7 @@
 set completion-ignore-case on
+
+"\eOA": history-search-backward
+"\e[A": history-search-backward
+"\eOB": history-search-forward
+"\e[B": history-search-forward
+
