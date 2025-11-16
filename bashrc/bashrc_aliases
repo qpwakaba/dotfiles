@@ -1,4 +1,14 @@
 # vim: set ft=bash:
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias :q='exit'
 
-source $DOTFILES_HOME/zshrc/zshrc_aliases
+function gs {
+  grep -rn "$1" .
+}
 
+function mkd {
+  mkdir -p "$1"
+  cd "$1"
+}
