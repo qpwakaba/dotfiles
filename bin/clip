@@ -19,7 +19,7 @@ data="$(cat "$@")"
 size="${#data}"
 
 if (( SIZE_MAX < size )); then
-  echo "Too long input (max size: $SIZE_MAX)" >&2
+  echo "Too long input (max size: $SIZE_MAX, current size: $size)" >&2
   exit 1
 fi
 
