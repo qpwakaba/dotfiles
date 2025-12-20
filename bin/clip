@@ -7,9 +7,10 @@ BEL=$'\a'
 if [[ "$TERM" = "tmux" ]] || [[ "${TERM:0:5}" = "tmux-" ]]; then
   if [[ "$(tmux show-options -v set-clipboard)" = "off" ]]; then
     echo >&2 'clip: Error: Cannot set clipboard because tmux "set-clipboard" option is "off".'
-    echo >&2 '             Run `tmux set-options -g set-clipboard on` or append next config to .tmux.conf'
     echo >&2 ''
-    echo >&2 '             set -g set-clipboard on'
+    echo >&2 'Run `tmux set-option -g set-clipboard on` or append next config to .tmux.conf'
+    echo >&2 ''
+    echo >&2 '  set -g set-clipboard on'
     echo >&2 ''
     exit 1
   fi
