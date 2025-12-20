@@ -3,6 +3,10 @@
 DOTPATH=~/dotfiles
 (cd $DOTPATH && git submodule update --init --recursive)
 
+if ! [ -e "$HOME/.local" ]; then
+  mkdir "$HOME/.local"
+fi
+
 for f in .??*
 do
   [ "$f" = ".git" ] && continue
@@ -14,9 +18,6 @@ do
   ln -snfv "$DOTPATH/$f" "$HOME"/"$f"
 done
 
-if ! [ -e "$HOME/.local" ]; then
-  mkdir "$HOME/.local"
-fi
 if [ -f "$HOME/.local/profile" ]; then
   sed -e '/^export DOTFILES_HOME=.*$/d' -i "$HOME/.local/profile"
 fi
