@@ -19,7 +19,13 @@ if [ "${DOTFILES_PROFILE_LOADED:-0}" != 1 ]; then
 
   if [ -f "$HOME/.local/profile" ]; then
     . $HOME/.local/profile
-    export PATH="$DOTFILES_HOME/bin:$PATH"
   fi
 
+  XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+  DOTFILES_CONFIG_HOME="$XDG_CONFIG_HOME/dotfiles"
+  source "$DOTFILES_CONFIG_HOME/exports"
+
+  if [ -d "$DOTFILES_HOME/bin" ]; then
+    export PATH="$DOTFILES_HOME/bin:$PATH"
+  fi
 fi
