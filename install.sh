@@ -42,12 +42,6 @@ main() {
 
   if [ -f "$HOME/.local/profile" ]; then
     sed -i "$HOME/.local/profile" -e '/^export DOTFILES_HOME=.*$/d'
-    sed -i "$HOME/.local/profile" -e '
-      /^# ==== DOTFILES INSTALL SCRIPT: include dotfiles config exports ====$/ {
-        N
-        N
-        /# ==== DOTFILES INSTALL SCRIPT: (DO NOT EDIT THIS BLOCK) ====$/ d
-      }'
   fi
 
   XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
@@ -58,11 +52,6 @@ main() {
     sed -e '/^export DOTFILES_HOME=.*$/d' -i "$DOTFILES_CONFIG_EXPORTS"
   fi
   echo "export DOTFILES_HOME=$SCRIPT_DIR" >>"$DOTFILES_CONFIG_EXPORTS"
-
-  echo >>"$HOME/.local/profile" \
-"# ==== DOTFILES INSTALL SCRIPT: include dotfiles config exports ====
-. '$DOTFILES_CONFIG_EXPORTS'
-# ==== DOTFILES INSTALL SCRIPT: (DO NOT EDIT THIS BLOCK) ===="
 
   for f in $SCRIPT_DIR/setup/*.sh; do
     if ! [ -x "$f" ]; then
