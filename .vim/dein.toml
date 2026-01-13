@@ -287,3 +287,11 @@ hi CocWarningFloat ctermfg=3 ctermbg=8
 repo = 'gorodinskiy/vim-coloresque'
 on_ft = ['css', 'html', 'less', 'sass', 'scss', 'stylus', 'vim']
 
+[[plugins]]
+repo = 'github/copilot.vim'
+hook_add = '''
+let b:copilot_enabled = v:false
+imap <F9> <Plug>(copilot-suggest)
+imap <F10> <Plug>(copilot-next)
+imap <F8> <Plug>(copilot-previous)
+'''
