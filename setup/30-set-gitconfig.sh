@@ -36,20 +36,30 @@ main() {
 set_config_git() {
   key="$1"; shift
   value="$1"; shift
-  if git config get --global "$key" >/dev/null 2>&1; then
-    current="$(git config get --global "$key" 2>/dev/null)"
+  current="$(native_git_config_get "$key" 2>/dev/null)"
+  if [ $? -eq 0 ]; then
     if [ "$current" = "$value" ]; then
       # current is already same value
       return 0
     fi
 
-    echo   >&2 "$key is currently '$(git config get --global "$key")'"
+    echo   >&2 "$key is currently '$current'"
     echo_n >&2 "Overwrite to '$value'? [y/N]: "
     if ! shlib_confirm_yn_with_default 'n'; then
       return 1
     fi
   fi
-  git config set --global "$key" "$value"
+  native_git_config_set "$key" "$value"
+}
+
+native_git_config_get() {
+  # use legacy syntax
+  git config --global --get -- "$1"
+}
+
+native_git_config_set() {
+  # use legacy syntax
+  git config --global -- "$1" "$2"
 }
 
 simulate_git_config_set_last_section_subsection=
