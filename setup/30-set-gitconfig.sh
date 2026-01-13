@@ -37,6 +37,7 @@ set_config_git() {
   key="$1"; shift
   value="$1"; shift
   current="$(native_git_config_get "$key" 2>/dev/null)"
+  # shellcheck disable=SC2181
   if [ $? -eq 0 ]; then
     if [ "$current" = "$value" ]; then
       # current is already same value
