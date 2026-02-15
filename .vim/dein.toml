@@ -108,13 +108,6 @@ map  <Leader>W <Plug>(easymotion-bd-w)
 nmap <Leader>W <Plug>(easymotion-overwin-w)
 '''
 
-[[plugins]]
-repo = 'rust-lang/rust.vim'
-on_ft = ['rust']
-hook_add = '''
-let g:rustfmt_autosave = 1
-'''
-
 # ref: いちからvimのrust開発環境を構築していく! (rust.vim, coc.nvim) https://zenn.dev/yuucu/articles/vimrc-rust-yuucu
 # Nodejs extension host for vim & neovim, load extensions like VSCode and host language servers.
 [[plugins]]

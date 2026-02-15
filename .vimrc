@@ -313,12 +313,7 @@ hi Pmenu ctermbg=22 ctermfg=white
 set showtabline=1
 set laststatus=2
 
-" 行末スペースハイライト
-augroup HighlightTrailingSpaces
-  autocmd!
-  autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=Red ctermbg=Red
-  autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
-augroup END
+set listchars+=trail:␣
 
 noremap <expr> <Down> popup_findinfo() != 0 ? "\<Down>" : "gj"
 noremap <expr> <Up>   popup_findinfo() != 0 ? "\<Up>"   : "gk"
