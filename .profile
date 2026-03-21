@@ -24,7 +24,17 @@ DOTFILES_CONFIG_HOME="$XDG_CONFIG_HOME/dotfiles"
 . "$DOTFILES_CONFIG_HOME/exports"
 
 if [ -d "$DOTFILES_HOME/bin" ]; then
-  export PATH="$DOTFILES_HOME/bin:$PATH"
+  case "$PATH" in
+    "$DOTFILES_HOME/bin" |\
+    "$DOTFILES_HOME/bin:"* |\
+    *":$DOTFILES_HOME/bin:"* |\
+    *":$DOTFILES_HOME/bin" |)
+      true
+      ;;
+    *)
+      export PATH="$DOTFILES_HOME/bin:$PATH"
+      ;;
+  esac
 fi
 
 if [ "${LS_COLORS:-}" = "" ] && command -v dircolors >/dev/null; then
