@@ -28,7 +28,7 @@ if [ -d "$DOTFILES_HOME/bin" ]; then
     "$DOTFILES_HOME/bin" |\
     "$DOTFILES_HOME/bin:"* |\
     *":$DOTFILES_HOME/bin:"* |\
-    *":$DOTFILES_HOME/bin" |)
+    *":$DOTFILES_HOME/bin" )
       true
       ;;
     *)
