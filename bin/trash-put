@@ -1,0 +1,218 @@
+#!/bin/bash
+TRASH_SIZE_THRESHOLD=$((100 * 1000 * 1000))
+# --- 外部コマンド ---
+# mkdir, mv, rm, date, realpath, stat, ls, find
+
+set -eu
+
+# 1. UTF-8 環境チェック
+if [[ ! "${LANG^^}" =~ "UTF-8" ]]; then
+    echo "Error: This script requires a UTF-8 environment." >&2
+    exit 1
+fi
+
+TRASH_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/Trash"
+FILES_DIR="$TRASH_DIR/files"
+INFO_DIR="$TRASH_DIR/info"
+
+mkdir -p "$FILES_DIR" "$INFO_DIR"
+
+# --- ユーティリティ関数 ---
+
+url_encode() {
+    local string="${1}"
+    local length="${#string}"
+    local res=""
+    for (( i = 0; i < length; i++ )); do
+        local c="${string:i:1}"
+        case "$c" in
+            [a-zA-Z0-9.~/_-]) res+="$c" ;;
+            *) printf -v hex '%%%02X' "'$c"; res+="$hex" ;;
+        esac
+    done
+    echo "$res"
+}
+
+url_decode() {
+    local encoded="${1//+/ }"
+    printf '%b' "${encoded//%/\\x}"
+}
+
+check_and_confirm_another_partition() {
+    local target home_dev target_dev
+    target="$1"; shift
+    home_dev=$(stat -c %d "$HOME")
+    target_dev=$(stat -c %d "$target")
+
+    if ! [[ -t 0 ]]; then
+        echo "Warning: '$target' is on another partition, but move in non-interaction mode" >&2
+        return 0
+    fi
+
+    if [[ "$home_dev" != "$target_dev" ]]; then
+        local file_size
+        file_size=$(stat -c %s "$target")
+        if (( file_size > TRASH_SIZE_THRESHOLD )); then
+            # サイズがしきい値を超えている場合のみ問い合わせ
+            local size_mb=$(( file_size / 1024 / 1024 ))
+            echo "Warning: '$target' is on another partition and is ${size_mb}MB." >&2
+            read -p "Move to home trash? (This involves copying) [y/N]: " -n 1 -r
+            echo >&2
+            if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+                echo "Skipped: $target" >&2
+                return 1
+            fi
+        fi
+        # しきい値以下の場合は問い合わせなしで続行
+    fi
+    return 0
+}
+
+# --- コマンド実装 ---
+
+# trash-put
+cmd_put() {
+    for target in "$@"; do
+        if ! [[ -e "$target" ]] && ! [[ -L "$target" ]]; then
+            echo "Error: '$target' does not exist." >&2; continue
+        fi
+
+        local abs_path
+        abs_path=$(realpath "$target")
+
+        if ! check_and_confirm_another_partition "$target"; then
+          echo "Skipped: $target" >&2
+          continue
+        fi
+
+        local base_name="${target##*/}"
+        local dest_name="$base_name"
+        local counter=1
+        while :; do
+            local info_file="$INFO_DIR/$dest_name.trashinfo"
+            if ( set -o noclobber; : > "$info_file" ) 2>/dev/null; then break; fi
+            dest_name="${base_name}_$((counter++))"
+        done
+
+        {
+            echo "[Trash Info]"
+            echo "Path=$(url_encode "$abs_path")"
+            echo "DeletionDate=$(date +%Y-%m-%dT%H:%M:%S)"
+        } > "$INFO_DIR/$dest_name.trashinfo"
+
+        if mv "$target" "$FILES_DIR/$dest_name"; then
+            echo "Trashed: $target" >&2
+        else
+            rm -f "$INFO_DIR/$dest_name.trashinfo"
+        fi
+    done
+}
+
+# trash-list
+cmd_list() {
+    printf "%-19s %s\n" "Deletion Date" "Path" >&2
+    printf "%.60s\n" "------------------------------------------------------------" >&2
+    for info in "$INFO_DIR"/*.trashinfo; do
+        [[ -e "$info" ]] || continue
+        local p="" d=""
+        while IFS='=' read -r key val; do
+            if [[ "$key" == "Path" ]]; then
+                p=$(url_decode "$val")
+            fi
+            if [[ "$key" == "DeletionDate" ]]; then
+                d="$val"
+            fi
+        done < "$info"
+        printf "%-19s %s\n" "$d" "$p" >&2
+    done
+}
+
+# trash-empty
+cmd_empty() {
+    local days="${1:-}"
+    if [[ -n "$days" ]]; then
+        # $days 日より古いものを削除
+        find "$INFO_DIR" -name "*.trashinfo" -mtime +"$days" -exec bash -c '
+            for info; do
+                base=$(basename "$info" .trashinfo)
+                rm -rf "'"$FILES_DIR"'/$base" "$info"
+            done
+        ' _ {} +
+    else
+        rm -rf "${FILES_DIR:?}"/* "${INFO_DIR:?}"/*
+        echo "Trash emptied." >&2
+    fi
+}
+
+# trash-rm
+cmd_rm() {
+    for pattern in "$@"; do
+        for info in "$INFO_DIR"/$pattern.trashinfo; do
+            if ! [[ -e "$info" ]]; then
+                echo "No such file in trash: $pattern"
+                continue
+            fi
+            local base
+            base=$(basename "$info" .trashinfo)
+            rm -rf "${FILES_DIR:?}/$base" "${info:?}"
+            echo "Removed from trash: $base" >&2
+        done
+    done
+}
+
+# trash-restore
+cmd_restore() {
+    local items=()
+    local i=0
+    while IFS= read -r -d '' file; do
+        items+=("$file")
+        local p=""
+        while IFS='=' read -r key val; do
+            if [[ "$key" == "Path" ]]; then
+                p="$(url_decode "$val")"
+            fi
+        done < "$file"
+        printf "[%2d] %s\n" "$i" "$p" >&2
+        ((i = i + 1))
+    done < <(find "$INFO_DIR" -name "*.trashinfo" -print0)
+
+    if [[ ${#items[@]} -eq 0 ]]; then
+        echo "Trash is empty." >&2
+        return
+    fi
+
+    read -e -p "Enter index to restore: " idx
+    if [[ "$idx" =~ ^[0-9]+$ ]] && (( idx < ${#items[@]} )); then
+        local info base target_path
+        info="${items[$idx]}"
+        base=$(basename "$info" .trashinfo)
+        target_path=""
+        while IFS='=' read -r key val; do
+            if [[ "$key" == "Path" ]]; then
+                target_path=$(url_decode "$val")
+            fi
+        done < "$info"
+
+        mkdir -p "$(dirname "$target_path")"
+        if mv -i "$FILES_DIR/$base" "$target_path"; then
+            rm "$info"
+            echo "Restored to: $target_path" >&2
+        fi
+    else
+        echo "Invalid index." >&2
+    fi
+}
+
+# --- メインディスパッチャ ---
+
+case $(basename "$0") in
+    trash-put)     cmd_put "$@" ;;
+    trash-list)    cmd_list ;;
+    trash-empty)   cmd_empty "$@" ;;
+    trash-rm)      cmd_rm "$@" ;;
+    trash-restore) cmd_restore ;;
+    *)
+        echo "Usage: {trash-put|trash-list|trash-empty|trash-rm|trash-restore} [args]"
+        exit 1
+        ;;
+esac
