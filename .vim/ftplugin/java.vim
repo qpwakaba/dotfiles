@@ -1,2 +1,0 @@
-setlocal omnifunc=javacomplete#Complete
-
