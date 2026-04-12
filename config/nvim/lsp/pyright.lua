@@ -1,6 +1,17 @@
-vim.lsp.config['pyright'] = {
+local cmd
+if vim.fn.executable('npx') then
+  cmd = { 'npx', '--package=pyright', '--', 'pypright-langserver', '--stdio' }
+elseif vim.fn.executable('pyright') then
+  cmd = { 'pyright', '--stdio' }
+else
+  return {
+    cmd = { 'true' },
+  }
+end
+
+return {
   -- Command and arguments to start the server.
-  cmd = { 'npx', '--package=pyright', '--', 'pyright-langserver', '--stdio' },
+  cmd = cmd,
   -- Filetypes to automatically attach to.
   filetypes = { 'python' },
   -- Sets the "workspace" to the directory where any of these files is found.
