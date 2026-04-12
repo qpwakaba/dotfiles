@@ -1,0 +1,121 @@
+[[plugins]]
+repo = 'markonm/traces.vim'
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+lua_add = '''
+vim.g.EasyMotion_do_mapping = 0
+vim.keymap.set({'n', 'v'}, 'f', '<Plug>(easymotion-fl)', { silent = true })
+vim.keymap.set({'n', 'v'}, 't', '<Plug>(easymotion-tl)', { silent = true })
+vim.keymap.set({'n', 'v'}, 'F', '<Plug>(easymotion-Fl)', { silent = true })
+vim.keymap.set({'n', 'v'}, 'T', '<Plug>(easymotion-Tl)', { silent = true })
+
+vim.api.nvim_create_augroup('plugins.toml_vim-easymotion', { clear = true })
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufReadPost"}, {
+  group = 'plugins.toml_vim-easymotion',
+  pattern = "*",
+  callback = function(args)
+    if vim.bo[args.buf].buftype ~= "" then
+      return
+    end
+    vim.keymap.set('n', '<C-m>s', '<Plug>(easymotion-overwin-f2)', { silent = true, buffer = args.buf })
+  end,
+})
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-fern'
+lua_add = '''
+vim.api.nvim_create_augroup('FernMyConf', {clear = true})
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = 'FernMyConf',
+  nested = true, -- 必須
+  callback = function(args)
+    if vim.fn.argc() == 0 then
+      vim.cmd [[Fern . -reveal=% -drawer -toggle]]
+    else
+      -- vim.cmd [[Fern . -reveal=% -drawer -toggle -stay]]
+    end
+  end
+})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'fern',
+  callback = function(args)
+    -- 相対と絶対の両方の行番号をオフにする
+    vim.opt_local.relativenumber = false
+    vim.opt_local.number = false
+    vim.opt_local.signcolumn = 'no'
+    vim.opt_local.foldcolumn = "0"
+  end
+})
+
+'''
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'olimorris/codecompanion.nvim'
+depends = ['plenary.nvim']
+lua_add = '''
+require("codecompanion").setup({
+  adapters = {
+    ollama = function()
+      return require("codecompanion.adapters").extend("ollama", {
+        schema = {
+          model = {
+            default = "codellama:7b",
+          },
+        },
+      })
+    end,
+    gemini = function()
+      return require("codecompanion.adapters").extend("gemini", {
+        env = {
+          api_key = vim.env.GEMINI_API_KEY,
+        },
+        schema = {
+          model = {
+            default = "gemini-2.5-flash",
+          },
+        },
+      })
+    end
+  },
+  strategies = {
+--[[
+    chat = {
+      adapter = {
+        name = "ollama",
+        model = "codellama:7b",
+      },
+    },
+    inline = {
+      adapter = {
+        name = "ollama",
+        model = "codellama:7b",
+      },
+    },
+    agent = {
+      adapter = {
+        name = "ollama",
+        model = "codellama:7b",
+      },
+    },
+]]
+    chat = {
+      adapter = {
+        name = "gemini",
+        model = "gemini-2.5-flash",
+      },
+    },
+    agent = {
+      adapter = {
+        name = "gemini",
+        model = "gemini-2.5-flash",
+      },
+    },
+  },
+})
+'''
