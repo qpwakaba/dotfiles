@@ -13,7 +13,7 @@ shlib_command_exists() {
 # read from stdin y or n
 # exit code: 'y' => 0, 'n' => 1, '' => 3, * => 2
 shlib_confirm_yn() {
-  case "$(read _; echo "$_")" in
+  case "$(read line; echo "$line")" in
     "y" | "Y")
       return 0
       ;;
@@ -74,7 +74,7 @@ shlib_confirm_yn_with_default() {
 # $1: variable name
 # exit code: 0 => environ variable exists, 1 => not exists
 shlib_environ_exists() {
-  sh -c 'export' | while IFS=' =' read _ name value; do
+  sh -c 'export' | while IFS=' =' read line name value; do
     if [ "$name" = "$1" ]; then
       return 0
     fi
