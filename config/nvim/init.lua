@@ -11,6 +11,8 @@ if vim.fn.filereadable(dein_vim) == 1 then
   end
 end
 
+vim.cmd('colorscheme vim')
+
 
 vim.keymap.set('n', 'r<C-c>', '<Nop>', {})
 vim.keymap.set('n', '<C-w><C-c>', '<Nop>', {})
