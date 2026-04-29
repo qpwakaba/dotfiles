@@ -41,15 +41,17 @@ main() {
   )
 
   if [ -f "$HOME/.local/profile" ]; then
-    sed -i "$HOME/.local/profile" -e '/^export DOTFILES_HOME=.*$/d'
+    cp -a "$HOME/.local/profile" "$HOME/.local/profile.bak"
+    sed -e '/^export DOTFILES_HOME=.*$/d' "$HOME/.local/profile.bak" >"$HOME/.local/profile"
   fi
 
   XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
   DOTFILES_CONFIG_HOME="$XDG_CONFIG_HOME/dotfiles"
   DOTFILES_CONFIG_EXPORTS="$DOTFILES_CONFIG_HOME/exports"
   mkdir -p "$DOTFILES_CONFIG_HOME"
-  if [ -f "$DOTFILES_CONFIG_HOME/exports" ]; then
-    sed -e '/^export DOTFILES_HOME=.*$/d' -i "$DOTFILES_CONFIG_EXPORTS"
+  if [ -f "$DOTFILES_CONFIG_EXPORTS" ]; then
+    cp -a "$DOTFILES_CONFIG_EXPORTS" "$DOTFILES_CONFIG_EXPORTS.bak"
+    sed -e '/^export DOTFILES_HOME=.*$/d' "$DOTFILES_CONFIG_EXPORTS.bak" >"$DOTFILES_CONFIG_EXPORTS"
   fi
   echo "export DOTFILES_HOME=$SCRIPT_DIR" >>"$DOTFILES_CONFIG_EXPORTS"
 
