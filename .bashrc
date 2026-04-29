@@ -1,3 +1,6 @@
+if ! [[ -v DOTFILES_PROFILE_LOADED ]]; then
+  source "$HOME/.profile"
+fi
 if ! [[ -v DOTFILES_BASHRC_LOADED ]]; then
   DOTFILES_BASHRC_LOADED=1
 
