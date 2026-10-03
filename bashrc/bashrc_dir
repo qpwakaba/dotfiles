@@ -1,18 +1,19 @@
 # vim: set ft=bash:
 
-alias 'cd..'='cd ..'
-alias 'cd...'='cd ..'
+if [[ "$-" = *i* ]]; then
+  alias 'cd..'='cd ..'
+  alias 'cd...'='cd ..'
 
-cd ()
-{
-  to="$*"
-  if [ -z "$to" ]; then
-    to="$HOME"
-  fi
-  if [ "$to" != "-" ]; then
-    pushd "$to" >/dev/null && ls
-  else
-    { popd || pushd "$OLDPWD"; } && ls
-  fi
-}
-
+  cd ()
+  {
+    to="$*"
+    if [ -z "$to" ]; then
+      to="$HOME"
+    fi
+    if [ "$to" != "-" ]; then
+      pushd "$to" >/dev/null && ls
+    else
+      { popd || pushd "$OLDPWD"; } && ls
+    fi
+  }
+fi

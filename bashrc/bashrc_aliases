@@ -1,6 +1,8 @@
 # vim: set ft=bash:
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-alias :q='exit'
+if [[ "$-" = *i* ]]; then
+  alias rm='rm -i'
+  alias cp='cp -i'
+  alias mv='mv -i'
+  alias :q='exit'
+fi
 

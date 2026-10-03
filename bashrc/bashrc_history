@@ -1,16 +1,17 @@
 # vim: set ft=bash:
 
-HISTFILE=$HOME/.bash_history
-HISTSIZE=100000
-SAVEHIST=100000
+if [[ "$-" = *i* ]]; then
+  HISTFILE=$HOME/.bash_history
+  HISTSIZE=100000
+  SAVEHIST=100000
 
-HISTCONTROL=ignoreboth:erasedups
-HISTTIMEFORMAT="%F %T "
-if [ -n "$PROMPT_COMMAND" ]; then
-PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -c; history -r"
-else
-PROMPT_COMMAND="history -a; history -c; history -r"
+  HISTCONTROL=ignoreboth:erasedups
+  HISTTIMEFORMAT="%F %T "
+  if [ -n "$PROMPT_COMMAND" ]; then
+  PROMPT_COMMAND="$PROMPT_COMMAND; history -a; history -c; history -r"
+  else
+  PROMPT_COMMAND="history -a; history -c; history -r"
+  fi
+  shopt -u histappend
+  HISTIGNORE=' *'
 fi
-shopt -u histappend
-HISTIGNORE=' *'
-
