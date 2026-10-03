@@ -1,36 +1,21 @@
+[general]
+import = [
+  #"dark-mode.toml",
+  "light-mode.toml",
+  #"themes/king-color-scheme.toml"
+  "themes/king-2-color-scheme.toml"
+]
+
+[window]
+# パディングをウィンドウ全体
+dynamic_padding = true
+option_as_alt = "Both"
+
+#startup_mode = "Fullscreen"
+
 [font]
-normal = { family = "Hackgen Console NF", style = "Regular" }
-size = 14
-
-[colors]
-cursor = { text = "#111111", cursor = "#cccccc" }
-draw_bold_text_with_bright_colors = true
-
-[colors.primary]
-foreground = "#eeeeee"
-background = "#111111"
-#background = "#dddddd"
-#foreground = "#111111"
-
-[colors.normal]
-black = "#111111"
-blue = "#1994ff"
-cyan = "#18c7c7"
-green = "#12b512"
-magenta = "#e667e6"
-red = "#ff4719"
-white = "#cccccc"
-yellow = "#e0b816"
-
-[colors.bright]
-black = "#999999"
-blue = "#66b3ff"
-cyan = "#87e0e0"
-green = "#66d15c"
-magenta = "#eb98eb"
-red = "#fc694c"
-white = "#f2f2f2"
-yellow = "#e0cb6e"
+normal = { family = "Bizin Gothic NF", style = "Regular" }
+size = 18
 
 [keyboard]
 bindings = [
