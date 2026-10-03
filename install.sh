@@ -33,6 +33,9 @@ main() {
         "." | ".." | ".git" | ".ssh" | ".gitignore")
           continue
           ;;
+        *.swp | .DS_Store)
+          continue
+          ;;
       esac
 
       backup_if_needed "$f"
